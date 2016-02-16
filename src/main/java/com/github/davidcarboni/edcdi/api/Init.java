@@ -8,9 +8,10 @@ import java.security.KeyPair;
 /**
  * Created by david on 16/02/16.
  */
-public class Init  extends Startup {
+public class Init implements Startup {
 
     public static KeyPair keyPair;
+
     @Override
     public void init() {
         keyPair = Keys.newKeyPair();

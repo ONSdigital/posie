@@ -19,5 +19,6 @@ public class Result {
     @POST
     public String receive(HttpServletRequest request, HttpServletResponse response) {
         System.out.println("Received a result! Did nothing with it though.");
+        return "OK";
     }
 }
