@@ -1,6 +1,7 @@
 package com.github.davidcarboni.edcdi.api;
 
 import com.github.davidcarboni.cryptolite.Random;
+import com.github.davidcarboni.restolino.framework.Api;
 import com.github.davidcarboni.restolino.helpers.Path;
 import org.apache.commons.io.IOUtils;
 
@@ -14,6 +15,7 @@ import java.io.InputStream;
 /**
  * Gets an encrypted file.
  */
+@Api
 public class Result {
 
     @POST
