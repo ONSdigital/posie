@@ -1,6 +1,0 @@
-{
-  "name": "edcdi",
-  "description": "EDC Data Integration.",
-  "image": "heroku/java",
-  "addons": [  ]
-}
