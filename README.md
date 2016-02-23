@@ -2,6 +2,5 @@
 
 ![Logo](http://www.80snostalgia.com/files/fluposie.jpg)
 
-# EDC Data Integration
-
-Receiver for EDC eQ data.
+# Posie
+Questionnaire receiver.
