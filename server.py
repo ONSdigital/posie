@@ -27,21 +27,27 @@ def key():
 
 @app.route('/import', methods=['POST'])
 def receiver():
-    posted_json = request.get_json()
-    encoded_json = posted_json.get('contents').encode('iso-8859-1')
+    try:
+        posted_json = request.get_json()
+        encoded_json = posted_json.get('contents').encode('iso-8859-1')
 
-    plaintext = private_key.decrypt(
-        encoded_json,
-        padding.OAEP(
-            mgf=padding.MGF1(algorithm=hashes.SHA1()),
-            algorithm=hashes.SHA1(),
-            label=None
-        )
-    ).decode(encoding="UTF-8")
+        plaintext = private_key.decrypt(
+            encoded_json,
+            padding.OAEP(
+                mgf=padding.MGF1(algorithm=hashes.SHA1()),
+                algorithm=hashes.SHA1(),
+                label=None
+            )
+        ).decode(encoding="UTF-8")
 
-    return json.dumps({
-        "data": plaintext
-    })
+        return json.dumps({
+            "success": True,
+            "data": plaintext
+        })
+    except:
+        return json.dumps({
+            "success": False
+        })
 
 
 if __name__ == '__main__':
