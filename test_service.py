@@ -2,7 +2,6 @@ from cryptography.hazmat.backends import default_backend
 from cryptography.hazmat.primitives.asymmetric import padding
 from cryptography.hazmat.primitives import serialization
 from cryptography.hazmat.primitives import hashes
-import os
 import requests
 import base64
 
@@ -28,12 +27,8 @@ ciphertext = public_key.encrypt(
     )
 )
 
-encoded = open(os.path.join("./data", "encoded.ssl"), 'wb')
-encoded.write(ciphertext)
-encoded.close()
-
-files = {'encoded': open(os.path.join("./data", "encoded.ssl"), 'rb')}
-
-r = requests.post("http://127.0.0.1:5000/import", files=files)
+r = requests.post("http://127.0.0.1:5000/import", json={
+    'contents': ciphertext.decode('iso-8859-1')
+})
 
 print(str(r.text))
