@@ -5,6 +5,7 @@ from cryptography.hazmat.backends import default_backend
 from cryptography.hazmat.primitives import hashes
 from cryptography.hazmat.primitives.serialization import Encoding, PublicFormat
 from cryptography.hazmat.primitives.asymmetric import rsa, padding
+import base64
 
 UPLOAD_FOLDER = './ready_to_import'
 DECODE_FOLDER = './decoded'
@@ -26,11 +27,11 @@ private_key = rsa.generate_private_key(
 def key():
 
     key = private_key.public_key().public_bytes(
-        encoding=Encoding.PEM,
+        encoding=Encoding.DER,
         format=PublicFormat.SubjectPublicKeyInfo
     )
 
-    return key
+    return base64.b64encode(key)
 
 
 def allowed_file(filename):

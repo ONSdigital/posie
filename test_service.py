@@ -4,14 +4,15 @@ from cryptography.hazmat.primitives import serialization
 from cryptography.hazmat.primitives import hashes
 import os
 import requests
+import base64
 
 # Load public key from http endpoint
 
 url = "http://127.0.0.1:5000/key"
 r = requests.get(url)
-key_string = r.content
+key_string = base64.b64decode(r.content)
 
-public_key = serialization.load_pem_public_key(
+public_key = serialization.load_der_public_key(
     key_string,
     backend=default_backend()
 )
