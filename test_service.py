@@ -7,7 +7,7 @@ import requests
 
 # Load public key from http endpoint
 
-url = "http://192.168.99.100/key"
+url = "http://127.0.0.1:5000/key"
 r = requests.get(url)
 key_string = r.content
 
@@ -27,12 +27,12 @@ ciphertext = public_key.encrypt(
     )
 )
 
-encoded = open(os.path.join("./data", "encoded.ssl"), 'w')
+encoded = open(os.path.join("./data", "encoded.ssl"), 'wb')
 encoded.write(ciphertext)
 encoded.close()
 
 files = {'encoded': open(os.path.join("./data", "encoded.ssl"), 'rb')}
 
-r = requests.post("http://192.168.99.100/import", files=files)
+r = requests.post("http://127.0.0.1:5000/import", files=files)
 
-print r.text
+print(str(r.text))

@@ -47,7 +47,7 @@ def receiver():
         file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
         file.close()
 
-        f = open(os.path.join(app.config['UPLOAD_FOLDER'], filename), 'r')
+        f = open(os.path.join(app.config['UPLOAD_FOLDER'], filename), 'rb')
         ciphertext = f.read()
         f.close()
 
@@ -58,14 +58,15 @@ def receiver():
                 algorithm=hashes.SHA1(),
                 label=None
             )
-        )
+        ).decode(encoding="UTF-8")
 
         decoded = open(os.path.join(app.config['DECODE_FOLDER'], "%s.decoded.txt" % filename), 'w')
         decoded.write(plaintext)
         decoded.close()
 
         return json.dumps({
-            "success": True
+            "success": True,
+            "data": plaintext
         })
 
     return json.dumps({
