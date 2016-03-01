@@ -46,7 +46,9 @@ def key():
         format=PublicFormat.SubjectPublicKeyInfo
     )
 
-    return base64.b64encode(key)
+    return jsonify({
+        "key": base64.b64encode(key).decode('utf-8')
+    })
 
 
 @app.route('/import', methods=['POST'])

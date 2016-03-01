@@ -19,7 +19,10 @@ class TestPosieService(unittest.TestCase):
         # Load public der key from http endpoint
 
         r = requests.get(self.key_url)
-        key_string = base64.b64decode(r.content)
+
+        b64key = r.json().get('key').encode('utf-8')
+
+        key_string = base64.b64decode(b64key)
 
         self.public_key = serialization.load_der_public_key(
             key_string,
