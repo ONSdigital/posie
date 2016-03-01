@@ -2,6 +2,7 @@ from cryptography.hazmat.backends import default_backend
 from cryptography.hazmat.primitives.asymmetric import padding
 from cryptography.hazmat.primitives import serialization
 from cryptography.hazmat.primitives import hashes
+
 import requests
 import base64
 import unittest
@@ -40,7 +41,7 @@ class TestPosieService(unittest.TestCase):
 
         # Ask posie to decode message
         r = requests.post(self.import_url, json={
-            'contents': ciphertext.decode('iso-8859-1')
+            'contents': base64.b64encode(ciphertext).decode('utf-8')
         })
 
         json_data = json.loads(r.text)

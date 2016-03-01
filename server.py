@@ -29,10 +29,10 @@ def key():
 def receiver():
     try:
         posted_json = request.get_json()
-        encoded_json = posted_json.get('contents').encode('iso-8859-1')
+        encoded_json = posted_json.get('contents').encode('utf-8')
 
         plaintext = private_key.decrypt(
-            encoded_json,
+            base64.b64decode(encoded_json),
             padding.OAEP(
                 mgf=padding.MGF1(algorithm=hashes.SHA1()),
                 algorithm=hashes.SHA1(),
