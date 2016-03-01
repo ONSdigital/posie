@@ -1,4 +1,4 @@
-from flask import Flask, request, json
+from flask import Flask, request, jsonify
 from cryptography.hazmat.backends import default_backend
 from cryptography.hazmat.primitives import hashes
 from cryptography.hazmat.primitives.serialization import Encoding, PublicFormat
@@ -14,6 +14,30 @@ private_key = rsa.generate_private_key(
 )
 
 
+@app.errorhandler(500)
+def decryption_error(error=None):
+    message = {
+        'status': 500,
+        'message': 'Decryption Failure: ' + request.url,
+    }
+    resp = jsonify(message)
+    resp.status_code = 500
+
+    return resp
+
+
+@app.errorhandler(400)
+def empty_content(error=None):
+    message = {
+        'status': 400,
+        'message': 'Empty content: ' + request.url,
+    }
+    resp = jsonify(message)
+    resp.status_code = 400
+
+    return resp
+
+
 @app.route('/key')
 def key():
 
@@ -27,27 +51,27 @@ def key():
 
 @app.route('/import', methods=['POST'])
 def receiver():
-    try:
-        posted_json = request.get_json()
-        encoded_json = posted_json.get('contents').encode('utf-8')
+    posted_json = request.get_json()
 
-        plaintext = private_key.decrypt(
-            base64.b64decode(encoded_json),
-            padding.OAEP(
-                mgf=padding.MGF1(algorithm=hashes.SHA1()),
-                algorithm=hashes.SHA1(),
-                label=None
-            )
-        ).decode(encoding="UTF-8")
+    if posted_json.get('contents') is None:
+        return empty_content()
+    else:
+        try:
+            encoded_json = posted_json.get('contents').encode('utf-8')
+            plaintext = private_key.decrypt(
+                base64.b64decode(encoded_json),
+                padding.OAEP(
+                    mgf=padding.MGF1(algorithm=hashes.SHA1()),
+                    algorithm=hashes.SHA1(),
+                    label=None
+                )
+            ).decode(encoding="UTF-8")
 
-        return json.dumps({
-            "success": True,
-            "data": plaintext
-        })
-    except:
-        return json.dumps({
-            "success": False
-        })
+            return jsonify({
+                "data": plaintext
+            })
+        except:
+            return decryption_error()
 
 
 if __name__ == '__main__':

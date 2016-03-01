@@ -26,6 +26,25 @@ class TestPosieService(unittest.TestCase):
             backend=default_backend()
         )
 
+    def test_decrypt_fails_with_500(self):
+
+        # Ask posie to decode message
+        r = requests.post(self.import_url, json={
+            'contents': 'Some random rubbish'
+        })
+
+        self.assertEqual(r.status_code, 500)
+
+    def test_decrypt_fails_with_400(self):
+
+        # Ask posie to decode message
+        r = requests.post(self.import_url, json={
+            'unknown_arg': 'Some random rubbish'
+        })
+
+        self.assertEqual(r.status_code, 400)
+
+
     def test_decrypts_message(self):
         # Encrypt a message with the key
         message = b"Some encrypted message"
