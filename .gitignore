@@ -1,3 +1,4 @@
 data/
 decoded/
 ready_to_import/
+tests/__pycache__/
