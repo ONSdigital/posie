@@ -42,5 +42,8 @@ class TestPosieService(unittest.TestCase):
         r = requests.post(self.import_url, json={
             'contents': ciphertext.decode('iso-8859-1')
         })
+
         json_data = json.loads(r.text)
-        self.assertEquals(json_data['data'], message)
+
+        # Compare to bytestring version of decrypted data
+        self.assertEqual(str.encode(json_data['data']), message)
