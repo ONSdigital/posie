@@ -1,18 +1,20 @@
 from cryptography.hazmat.backends import default_backend
 from cryptography.hazmat.primitives.asymmetric import padding
-from cryptography.hazmat.primitives import serialization
-from cryptography.hazmat.primitives import hashes
+from cryptography.hazmat.primitives import serialization, hashes
 
 import requests
 import base64
 import unittest
 import json
+import os
 
 
 class TestPosieService(unittest.TestCase):
 
-    key_url = "http://127.0.0.1:5000/key"
-    import_url = "http://127.0.0.1:5000/import"
+    POSIE_URL = os.getenv('POSIE_URL', 'http://127.0.0.1:5000')
+
+    key_url = "{}/key".format(POSIE_URL)
+    import_url = "{}/import".format(POSIE_URL)
     public_key = ""
 
     def setUp(self):
@@ -28,6 +30,24 @@ class TestPosieService(unittest.TestCase):
             key_string,
             backend=default_backend()
         )
+
+    def send_message(self, message):
+
+        ciphertext = self.public_key.encrypt(
+            message,
+            padding.OAEP(
+                mgf=padding.MGF1(algorithm=hashes.SHA1()),
+                algorithm=hashes.SHA1(),
+                label=None
+            )
+        )
+
+        # Ask posie to decode message
+        r = requests.post(self.import_url, json={
+            'contents': base64.b64encode(ciphertext).decode('utf-8')
+        })
+
+        return r
 
     def test_decrypt_fail_sends_500(self):
 
@@ -47,8 +67,8 @@ class TestPosieService(unittest.TestCase):
 
         self.assertEqual(r.status_code, 400)
 
-    def test_decrypts_message(self):
-        # Encrypt a message with the key
+    def test_mulitple_args_sends_400(self):
+
         message = b"Some encrypted message"
 
         ciphertext = self.public_key.encrypt(
@@ -62,8 +82,18 @@ class TestPosieService(unittest.TestCase):
 
         # Ask posie to decode message
         r = requests.post(self.import_url, json={
-            'contents': base64.b64encode(ciphertext).decode('utf-8')
+            'contents': base64.b64encode(ciphertext).decode('utf-8'),
+            'unknown_arg': 'Some other arg'
         })
+
+        self.assertEqual(r.status_code, 400)
+
+    def test_decrypts_message(self):
+        # Encrypt a message with the key
+        message = b"Some encrypted message"
+
+        # Ask posie to decode message
+        r = self.send_message(message)
 
         json_data = json.loads(r.text)
 
