@@ -40,48 +40,21 @@ class TestPosieService(unittest.TestCase):
         )
 
         # Ask posie to decode message
-        r = requests.post(self.import_url, json={
-            'contents': base64.b64encode(ciphertext).decode('utf-8')
-        })
+        r = requests.post(self.import_url, data=base64.b64encode(ciphertext))
 
         return r
 
     def test_decrypt_fail_sends_500(self):
 
         # Ask posie to decode message
-        r = requests.post(self.import_url, json={
-            'contents': 'Some random rubbish'
-        })
+        r = requests.post(self.import_url, data='rubbish')
 
         self.assertEqual(r.status_code, 500)
 
     def test_no_content_sends_400(self):
 
         # Ask posie to decode message
-        r = requests.post(self.import_url, json={
-            'unknown_arg': 'Some random rubbish'
-        })
-
-        self.assertEqual(r.status_code, 400)
-
-    def test_mulitple_args_sends_400(self):
-
-        message = b"Some encrypted message"
-
-        ciphertext = self.public_key.encrypt(
-            message,
-            padding.OAEP(
-                mgf=padding.MGF1(algorithm=hashes.SHA1()),
-                algorithm=hashes.SHA1(),
-                label=None
-            )
-        )
-
-        # Ask posie to decode message
-        r = requests.post(self.import_url, json={
-            'contents': base64.b64encode(ciphertext).decode('utf-8'),
-            'unknown_arg': 'Some other arg'
-        })
+        r = requests.post(self.import_url, data='')
 
         self.assertEqual(r.status_code, 400)
 

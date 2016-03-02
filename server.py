@@ -27,18 +27,6 @@ def decryption_error(error=None):
 
 
 @app.errorhandler(400)
-def unexpected_argument(error=None):
-    message = {
-        'status': 400,
-        'message': 'Unexpected argument: ' + request.url,
-    }
-    resp = jsonify(message)
-    resp.status_code = 400
-
-    return resp
-
-
-@app.errorhandler(400)
 def empty_content(error=None):
     message = {
         'status': 400,
@@ -63,15 +51,13 @@ def key():
 
 @app.route('/decrypt', methods=['POST'])
 def receiver():
-    posted_json = request.get_json()
+    request.get_data()
 
-    if posted_json.get('contents') is None:
+    if not request.data:
         return empty_content()
-    elif len(posted_json) > 1:
-        return unexpected_argument()
     else:
         try:
-            encoded_json = posted_json.get('contents').encode('utf-8')
+            encoded_json = request.data
 
             plaintext = private_key.decrypt(
                 base64.b64decode(encoded_json),
