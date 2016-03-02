@@ -5,7 +5,6 @@ from cryptography.hazmat.primitives import serialization, hashes
 import requests
 import base64
 import unittest
-import json
 import os
 
 
@@ -22,9 +21,7 @@ class TestPosieService(unittest.TestCase):
 
         r = requests.get(self.key_url)
 
-        b64key = r.json().get('key').encode('utf-8')
-
-        key_string = base64.b64decode(b64key)
+        key_string = base64.b64decode(r.text)
 
         self.public_key = serialization.load_der_public_key(
             key_string,

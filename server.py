@@ -58,9 +58,7 @@ def key():
         format=PublicFormat.SubjectPublicKeyInfo
     )
 
-    return jsonify({
-        "key": base64.b64encode(key).decode('utf-8')
-    })
+    return base64.b64encode(key)
 
 
 @app.route('/decrypt', methods=['POST'])
