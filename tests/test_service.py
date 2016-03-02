@@ -14,7 +14,7 @@ class TestPosieService(unittest.TestCase):
     POSIE_URL = os.getenv('POSIE_URL', 'http://127.0.0.1:5000')
 
     key_url = "{}/key".format(POSIE_URL)
-    import_url = "{}/import".format(POSIE_URL)
+    import_url = "{}/decrypt".format(POSIE_URL)
     public_key = ""
 
     def setUp(self):
@@ -95,7 +95,5 @@ class TestPosieService(unittest.TestCase):
         # Ask posie to decode message
         r = self.send_message(message)
 
-        json_data = json.loads(r.text)
-
         # Compare to bytestring version of decrypted data
-        self.assertEqual(str.encode(json_data['data']), message)
+        self.assertEqual(str.encode(r.text), message)

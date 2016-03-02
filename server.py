@@ -63,7 +63,7 @@ def key():
     })
 
 
-@app.route('/import', methods=['POST'])
+@app.route('/decrypt', methods=['POST'])
 def receiver():
     posted_json = request.get_json()
 
@@ -74,6 +74,7 @@ def receiver():
     else:
         try:
             encoded_json = posted_json.get('contents').encode('utf-8')
+
             plaintext = private_key.decrypt(
                 base64.b64decode(encoded_json),
                 padding.OAEP(
@@ -83,9 +84,7 @@ def receiver():
                 )
             ).decode(encoding="UTF-8")
 
-            return jsonify({
-                "data": plaintext
-            })
+            return plaintext
         except:
             return decryption_error()
 
