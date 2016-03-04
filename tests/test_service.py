@@ -44,12 +44,12 @@ class TestPosieService(unittest.TestCase):
 
         return r
 
-    def test_decrypt_fail_sends_500(self):
+    def test_decrypt_fail_sends_400(self):
 
         # Ask posie to decode message
         r = requests.post(self.import_url, data='rubbish')
 
-        self.assertEqual(r.status_code, 500)
+        self.assertEqual(r.status_code, 400)
 
     def test_no_content_sends_400(self):
 

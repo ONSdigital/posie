@@ -3,7 +3,9 @@ from cryptography.hazmat.backends import default_backend
 from cryptography.hazmat.primitives import hashes
 from cryptography.hazmat.primitives.serialization import Encoding, PublicFormat
 from cryptography.hazmat.primitives.asymmetric import rsa, padding
+from cryptography import exceptions
 import base64
+import binascii
 
 app = Flask(__name__)
 
@@ -14,26 +16,26 @@ private_key = rsa.generate_private_key(
 )
 
 
-@app.errorhandler(500)
-def decryption_error(error=None):
+@app.errorhandler(400)
+def known_error(error=None):
     message = {
-        'status': 500,
-        'message': 'Decryption Failure: ' + request.url,
+        'status': 400,
+        'message': "{}: {}".format(error, request.url),
     }
     resp = jsonify(message)
-    resp.status_code = 500
+    resp.status_code = 400
 
     return resp
 
 
-@app.errorhandler(400)
-def empty_content(error=None):
+@app.errorhandler(500)
+def unknown_error():
     message = {
-        'status': 400,
-        'message': 'Empty content: ' + request.url,
+        'status': 500,
+        'message': "Internal server error",
     }
     resp = jsonify(message)
-    resp.status_code = 400
+    resp.status_code = 500
 
     return resp
 
@@ -54,23 +56,38 @@ def receiver():
     request.get_data()
 
     if not request.data:
-        return empty_content()
+        return known_error("Request payload was empty")
+
+    try:
+        encoded_json = request.data
+
+        plaintext = private_key.decrypt(
+            base64.b64decode(encoded_json),
+            padding.OAEP(
+                mgf=padding.MGF1(algorithm=hashes.SHA1()),
+                algorithm=hashes.SHA1(),
+                label=None
+            )
+        ).decode(encoding="UTF-8")
+    except (
+            exceptions.UnsupportedAlgorithm,
+            exceptions.InvalidKey,
+            exceptions.AlreadyFinalized,
+            exceptions.InvalidSignature,
+            exceptions.NotYetFinalized,
+            exceptions.AlreadyUpdated):
+        return known_error("Decryption Failure")
+    except binascii.Error:
+        return known_error("Request payload was not base64 encoded")
+    except ValueError as e:
+        if str(e) == "Ciphertext length must be equal to key size.":
+            return known_error(str(e))
+        else:
+            return unknown_error()
+    except:
+        return unknown_error()
     else:
-        try:
-            encoded_json = request.data
-
-            plaintext = private_key.decrypt(
-                base64.b64decode(encoded_json),
-                padding.OAEP(
-                    mgf=padding.MGF1(algorithm=hashes.SHA1()),
-                    algorithm=hashes.SHA1(),
-                    label=None
-                )
-            ).decode(encoding="UTF-8")
-
-            return plaintext
-        except:
-            return decryption_error()
+        return plaintext
 
 
 if __name__ == '__main__':
