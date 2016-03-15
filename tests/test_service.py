@@ -70,3 +70,13 @@ class TestPosieService(unittest.TestCase):
 
         # Compare to bytestring version of decrypted data
         self.assertEqual(r.data, message)
+
+    def test_decrypts_large_message(self):
+        # Encrypt a message with the key
+        message = b"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut lectus urna, elementum vitae massa congue, varius aliquam purus. Etiam quis pellentesque felis. Morbi vehicula sagittis enim iaculis pretium. Fusce venenatis pretium ante, et semper ipsum blandit vitae. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras lobortis dictum sapien et faucibus. Nulla vitae nisl ante."
+
+        # Ask posie to decode message
+        r = self.send_message(message)
+
+        # Compare to bytestring version of decrypted data
+        self.assertEqual(r.data, message)
