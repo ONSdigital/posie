@@ -1,10 +1,12 @@
 from cryptography.hazmat.backends import default_backend
 from cryptography.hazmat.primitives import serialization, hashes
 from cryptography.hazmat.primitives.asymmetric import padding
+from cryptography.hazmat.primitives.ciphers import Cipher, algorithms, modes
 
 from server import app
 import base64
 import unittest
+import os
 
 
 class TestPosieService(unittest.TestCase):
@@ -13,6 +15,15 @@ class TestPosieService(unittest.TestCase):
     decrypt_endpoint = "/decrypt"
 
     def setUp(self):
+        self.key = os.urandom(32)
+        self.iv = os.urandom(16)
+
+        backend = default_backend()
+
+        cipher = Cipher(algorithms.AES(self.key), modes.CTR(self.iv), backend=backend)
+
+        self.encryptor = cipher.encryptor()
+
         # creates a test client
         self.app = app.test_client()
 
@@ -28,10 +39,11 @@ class TestPosieService(unittest.TestCase):
             backend=default_backend()
         )
 
-    def send_message(self, message):
+    def send_message(self, message_bytes):
+        data = self.encryptor.update(message_bytes) + self.encryptor.finalize()
 
-        ciphertext = self.public_key.encrypt(
-            message,
+        encrypted_key = self.public_key.encrypt(
+            self.key,
             padding.OAEP(
                 mgf=padding.MGF1(algorithm=hashes.SHA1()),
                 algorithm=hashes.SHA1(),
@@ -39,8 +51,10 @@ class TestPosieService(unittest.TestCase):
             )
         )
 
+        encoded_data = base64.b64encode(encrypted_key + self.iv + data)
+
         # Ask posie to decode message
-        r = self.app.post(self.decrypt_endpoint, data=base64.b64encode(ciphertext))
+        r = self.app.post(self.decrypt_endpoint, data=encoded_data)
 
         return r
 
