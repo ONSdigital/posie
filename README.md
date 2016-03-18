@@ -8,4 +8,4 @@ Posie is a decryption service. It exposes two endpoints '/key' and '/decrypt' wh
 
 The key endpoint exposes a der format public key and the decrypt endpoint decrypts and returns the POST data it is sent.
 
-All requests have a json content type.
+All requests have a json content type..
