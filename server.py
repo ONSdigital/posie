@@ -65,6 +65,9 @@ def receiver():
         return known_error("Request payload was empty")
 
     try:
+        app.logger.debug("------ Received some data -------")
+        app.logger.debug(request.data)
+        
         decoded_msg = base64.b64decode(request.data)
 
         key_recvd = decoded_msg[:512]
@@ -96,6 +99,13 @@ def receiver():
         return known_error("Decryption Failure")
     except binascii.Error:
         return known_error("Request payload was not base64 encoded")
+    except ValueError as e:        
+        if str(e) == "Ciphertext length must be equal to key size.":
+            return known_error(str(e))
+        else:     
+            return unknown_error()
+    except:
+        return unknown_error()
     else:
         return result_str
 
