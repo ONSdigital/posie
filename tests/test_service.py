@@ -87,7 +87,40 @@ class TestPosieService(unittest.TestCase):
 
     def test_decrypts_large_message(self):
         # Encrypt a message with the key
-        message = b"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut lectus urna, elementum vitae massa congue, varius aliquam purus. Etiam quis pellentesque felis. Morbi vehicula sagittis enim iaculis pretium. Fusce venenatis pretium ante, et semper ipsum blandit vitae. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras lobortis dictum sapien et faucibus. Nulla vitae nisl ante."
+        message = b'''{
+            "type": "uk.gov.ons.edc.eq:surveyresponse",
+            "version": "0.0.1",
+            "origin": "uk.gov.ons.edc.eq",
+            "survey_id": "21",
+            "collection": {
+              "exercise_sid": "hfjdskf",
+              "instrument_id": "0203",
+              "period": "2016-02-01"
+            },
+            "submitted_at": "2016-03-12T10:39:40Z",
+            "metadata": {
+              "user_id": "789473423",
+              "ru_ref": "12345678901A"
+            },
+            "data": {
+              "11": "01042016",
+              "12": "31102016",
+              "20": "1800000",
+              "51": "84",
+              "52": "10",
+              "53": "73",
+              "54": "24",
+              "50": "205",
+              "22": "705000",
+              "23": "900",
+              "24": "74",
+              "25": "50",
+              "26": "100",
+              "21": "60000",
+              "27": "7400",
+              "146": "some comment"
+            }
+        }'''
 
         # Ask posie to decode message
         r = self.send_message(message)
