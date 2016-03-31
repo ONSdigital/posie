@@ -45,7 +45,7 @@ The example below uses the Python libraries [cryptography](http://cryptography.i
     import requests
 
     # Get the public key and load it using cryptography.io
-    r = requests.get('http://127.0.0.1/5000/key', timeout=1)
+    r = requests.get('http://127.0.0.1/5000/key')
 
     key_string = base64.b64decode(r.text)
 
