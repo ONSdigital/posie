@@ -45,7 +45,7 @@ The example below uses the Python libraries [cryptography](http://cryptography.i
     import requests
 
     # Get the public key and load it using cryptography.io
-    r = requests.get('http://127.0.0.1/5000/key')
+    r = requests.get('http://127.0.0.1:5000/key')
 
     key_string = base64.b64decode(r.text)
 
@@ -87,7 +87,7 @@ The example below uses the Python libraries [cryptography](http://cryptography.i
 4. The second client may then contact Posie to decrypt the data it has been passed.
     
     ```python
-    r = requests.post('http://127.0.0.1/5000/decrypt', data=encrypted_data)
+    r = requests.post('http://127.0.0.1:5000/decrypt', data=encrypted_data)
 
     decrypted_data = r.text
     ```
