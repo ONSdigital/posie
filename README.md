@@ -33,6 +33,8 @@ Posie uses hybrid encryption to encrypt both the key, interupt vector and data.
 The example below uses the Python libraries [cryptography](http://cryptography.io) and [requests](https://github.com/kennethreitz/requests) to encrypt some data using Posie.
 
 1. A client first requests Posies public key
+    
+    ```python
     from cryptography.hazmat.backends import default_backend
     from cryptography.hazmat.primitives.asymmetric import padding
     from cryptography.hazmat.primitives import serialization, hashes
@@ -51,9 +53,11 @@ The example below uses the Python libraries [cryptography](http://cryptography.i
         key_string,
         backend=default_backend()
     )
+    ```
 
 2. The client uses that key to encode some data. 
-
+    
+    ```python
     # Encrypt some data using cryptography.io
     key = os.urandom(32)
     iv = os.urandom(16)
@@ -76,14 +80,17 @@ The example below uses the Python libraries [cryptography](http://cryptography.i
     )
 
     encrypted_data = base64.b64encode(encrypted_key + iv + data)
+    ```
 
 3. The encoded data may then be passed to second client....
 
 4. The second client may then contact Posie to decrypt the data it has been passed.
-
+    
+    ```python
     r = requests.post('http://127.0.0.1/5000/decrypt', data=encrypted_data)
 
     decrypted_data = r.text
+    ```
 
 ### Troubleshooting
 
