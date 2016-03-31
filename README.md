@@ -94,6 +94,6 @@ The example below uses the Python libraries [cryptography](http://cryptography.i
 
 ### Troubleshooting
 
-Whilst Posie works with JSON, the service makes no assumptions on the content type sent to it. The content encrypted and decrypted with it can be json or plaintext, it's up to the calling service to convert to their desired type.
+Whilst Posie works with JSON within our own use case, the service makes no assumptions on the content type sent to it. The content encrypted and decrypted with it can be json or plaintext, it's up to the calling service to convert to their desired type.
 
 Posies public key is recreated on each server restart. Any data encrypted in the wild will need to be re-encrypted using the current public key.
