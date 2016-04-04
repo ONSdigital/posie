@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.org/ONSdigital/Posie.svg?branch=master)](https://travis-ci.org/ONSdigital/Posie)
+[![Build Status](https://travis-ci.org/ONSdigital/posie.svg?branch=master)](https://travis-ci.org/ONSdigital/posie)
 
 ![Logo](http://www.80snostalgia.com/files/fluposie.jpg)
 
