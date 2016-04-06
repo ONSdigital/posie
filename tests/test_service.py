@@ -4,25 +4,23 @@ from cryptography.hazmat.primitives.asymmetric import padding
 from cryptography.hazmat.primitives.ciphers import Cipher, algorithms, modes
 
 from server import app
+from encrypter import Encrypter
+from decrypter import Decrypter
+
 import base64
 import unittest
 import os
+import json
 
 
 class TestPosieService(unittest.TestCase):
 
-    key_endpoint = "/key"
     decrypt_endpoint = "/decrypt"
 
     def setUp(self):
-        self.key = os.urandom(32)
-        self.iv = os.urandom(16)
 
-        backend = default_backend()
-
-        cipher = Cipher(algorithms.AES(self.key), modes.CTR(self.iv), backend=backend)
-
-        self.encryptor = cipher.encryptor()
+        self.encrypter = Encrypter()
+        self.decrypter = Decrypter()
 
         # creates a test client
         self.app = app.test_client()
@@ -30,36 +28,16 @@ class TestPosieService(unittest.TestCase):
         # propagate the exceptions to the test client
         self.app.testing = True
 
-        r = self.app.get(self.key_endpoint)
+    def encrypt_and_send_json(self, json_string):
 
-        key_string = base64.b64decode(r.data)
+        data = json.loads(json_string)
 
-        self.public_key = serialization.load_der_public_key(
-            key_string,
-            backend=default_backend()
-        )
-
-    def send_message(self, message_bytes):
-        data = self.encryptor.update(message_bytes) + self.encryptor.finalize()
-
-        encrypted_key = self.public_key.encrypt(
-            self.key,
-            padding.OAEP(
-                mgf=padding.MGF1(algorithm=hashes.SHA1()),
-                algorithm=hashes.SHA1(),
-                label=None
-            )
-        )
-
-        encoded_data = base64.b64encode(encrypted_key + self.iv + data)
+        encoded_data = self.encrypter.encrypt(data)
 
         # Ask posie to decode message
         r = self.app.post(self.decrypt_endpoint, data=encoded_data)
 
         return r
-
-    def test_key_generation(self):
-        self.assertIsNotNone(self.public_key)
 
     def test_decrypt_fail_sends_400(self):
 
@@ -77,17 +55,17 @@ class TestPosieService(unittest.TestCase):
 
     def test_decrypts_message(self):
         # Encrypt a message with the key
-        message = b"Some encrypted message"
+        message = '''{"some": "well", "formed": "json"}'''
 
         # Ask posie to decode message
-        r = self.send_message(message)
+        r = self.encrypt_and_send_json(message)
 
         # Compare to bytestring version of decrypted data
-        self.assertEqual(r.data, message)
+        self.assertEqual(json.loads(r.data.decode('UTF8')), json.loads(message))
 
     def test_decrypts_large_message(self):
         # Encrypt a message with the key
-        message = b'''{
+        message = '''{
             "type": "uk.gov.ons.edc.eq:surveyresponse",
             "version": "0.0.1",
             "origin": "uk.gov.ons.edc.eq",
@@ -122,8 +100,7 @@ class TestPosieService(unittest.TestCase):
             }
         }'''
 
-        # Ask posie to decode message
-        r = self.send_message(message)
+        # Encrypt and ask posie to decode message
+        r = self.encrypt_and_send_json(message)
 
-        # Compare to bytestring version of decrypted data
-        self.assertEqual(r.data, message)
+        self.assertEqual(json.loads(r.data.decode('UTF8')), json.loads(message))
