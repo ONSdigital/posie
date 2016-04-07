@@ -10,6 +10,7 @@ from decrypter import Decrypter
 import base64
 import binascii
 import json
+import settings
 
 app = Flask(__name__)
 
@@ -36,6 +37,10 @@ def unknown_error(error=None):
 
     return resp
 
+@app.route('/key')
+def key():
+
+    return settings.PUBLIC_KEY
 
 @app.route('/decrypt', methods=['POST'])
 def decrypt():
