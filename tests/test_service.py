@@ -1,4 +1,3 @@
-from cryptography.hazmat.backends import default_backend
 from cryptography.hazmat.backends.openssl.backend import backend
 from cryptography.hazmat.primitives import serialization, hashes
 from cryptography.hazmat.primitives.asymmetric import padding
@@ -7,22 +6,22 @@ from cryptography.hazmat.primitives.ciphers import Cipher, algorithms, modes
 from server import app
 from decrypter import Decrypter
 
-import settings
 import base64
 import unittest
 import os
 import json
+import settings
 import jwt
 
 KID = 'SDE'
 
 class Encrypter (object):
     def __init__(self):
-        private_key_bytes = self._to_bytes(settings.PRIVATE_SIGNING_KEY)
+        private_key_bytes = self._to_bytes(settings.EQ_PRIVATE_KEY)
         public_key_bytes = self._to_bytes(settings.PUBLIC_KEY)
 
         self.private_key = serialization.load_pem_private_key(private_key_bytes,
-                                                              password=self._to_bytes(settings.PRIVATE_SIGNING_KEY_PASSWORD),
+                                                              password=self._to_bytes(settings.PRIVATE_KEY_PASSWORD),
                                                               backend=backend)
 
         self.public_key = serialization.load_pem_public_key(public_key_bytes, backend=backend)

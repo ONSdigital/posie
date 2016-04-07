@@ -16,6 +16,11 @@ def get_key(key_name):
 
 EQ_JWT_LEEWAY_IN_SECONDS = 120
 
-PUBLIC_KEY = get_key(os.getenv('PUBLIC_KEY', "./jwt-test-keys/sdx-public.pem"))
-PRIVATE_SIGNING_KEY = get_key(os.getenv('PRIVATE_SIGNING_KEY', "./jwt-test-keys/sdx-private.pem"))
-PRIVATE_SIGNING_KEY_PASSWORD = os.getenv("PRIVATE_SIGNING_KEY_PASSWORD", "digitaleq")
+# EQ's keys
+EQ_PUBLIC_KEY = get_key(os.getenv('PUBLIC_KEY', "./jwt-test-keys/sr-public.pem"))
+EQ_PRIVATE_KEY = get_key(os.getenv('PUBLIC_KEY', "./jwt-test-keys/sr-private.pem"))
+
+# Posies keys
+PUBLIC_KEY = get_key(os.getenv('PRIVATE_KEY', "./jwt-test-keys/sdx-public.pem"))
+PRIVATE_KEY = get_key(os.getenv('PRIVATE_KEY', "./jwt-test-keys/sdx-private.pem"))
+PRIVATE_KEY_PASSWORD = os.getenv("PRIVATE_KEY_PASSWORD", "digitaleq")

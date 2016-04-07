@@ -17,12 +17,12 @@ CEK_EXPECT_LENGTH = 32
 class Decrypter(object):
     def __init__(self):
         self.public_key = serialization.load_pem_public_key(
-            settings.PUBLIC_KEY.encode(),
+            settings.EQ_PUBLIC_KEY.encode(),
             backend=backend
         )
         self.private_key = serialization.load_pem_private_key(
-            settings.PRIVATE_SIGNING_KEY.encode(),
-            password=self._to_bytes(settings.PRIVATE_SIGNING_KEY_PASSWORD),
+            settings.PRIVATE_KEY.encode(),
+            password=self._to_bytes(settings.PRIVATE_KEY_PASSWORD),
             backend=backend
         )
 
