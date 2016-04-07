@@ -21,8 +21,8 @@ class Decrypter(object):
             backend=backend
         )
         self.private_key = serialization.load_pem_private_key(
-            settings.PRIVATE_KEY.encode(),
-            password=self._to_bytes(settings.PRIVATE_KEY_PASSWORD),
+            settings.PRIVATE_SIGNING_KEY.encode(),
+            password=self._to_bytes(settings.PRIVATE_SIGNING_KEY_PASSWORD),
             backend=backend
         )
 
