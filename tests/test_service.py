@@ -21,8 +21,8 @@ class Encrypter (object):
         public_key_bytes = self._to_bytes(settings.PUBLIC_KEY)
 
         self.private_key = serialization.load_pem_private_key(private_key_bytes,
-                                                              password=self._to_bytes(settings.PRIVATE_KEY_PASSWORD),
-                                                              backend=backend)
+          password=self._to_bytes(settings.PRIVATE_KEY_PASSWORD),
+          backend=backend)
 
         self.public_key = serialization.load_pem_public_key(public_key_bytes, backend=backend)
 
