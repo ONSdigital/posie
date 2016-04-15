@@ -3,16 +3,14 @@ from cryptography.hazmat.primitives import serialization
 from cryptography.hazmat.primitives.ciphers import Cipher, algorithms, modes
 from cryptography.hazmat.primitives import hashes
 from cryptography.hazmat.primitives.asymmetric import padding
-from cryptography.exceptions import InvalidTag, InternalError
 
 import settings
 import base64
 import jwt
-import logging
-import json
 
 IV_EXPECTED_LENGTH = 12
 CEK_EXPECT_LENGTH = 32
+
 
 class Decrypter(object):
     def __init__(self):

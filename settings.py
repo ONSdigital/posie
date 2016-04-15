@@ -1,6 +1,9 @@
 import os
 import logging
 
+logger = logging.getLogger(__name__)
+
+
 def get_key(key_name):
     key = open(key_name, 'r')
     contents = key.read()

@@ -1,19 +1,13 @@
 from flask import Flask, request, jsonify
-from cryptography.hazmat.backends import default_backend
-from cryptography.hazmat.primitives.ciphers import Cipher, algorithms, modes
-from cryptography.hazmat.primitives import hashes
-from cryptography.hazmat.primitives.serialization import Encoding, PublicFormat
-from cryptography.hazmat.primitives.asymmetric import rsa, padding
 from cryptography import exceptions
 
 from decrypter import Decrypter
-import base64
 import binascii
-import json
 import settings
 import logging
 
 app = Flask(__name__)
+
 
 @app.errorhandler(400)
 def known_error(error=None):
@@ -40,9 +34,11 @@ def unknown_error(error=None):
 
     return resp
 
+
 @app.route('/key')
 def key():
     return settings.PUBLIC_KEY
+
 
 @app.route('/decrypt', methods=['POST'])
 def decrypt():
@@ -53,7 +49,7 @@ def decrypt():
 
     try:
         app.logger.debug("POSIE:DECRYPT: Received some data")
-        
+
         data_bytes = request.data.decode('UTF8')
 
         decrypter = Decrypter()
