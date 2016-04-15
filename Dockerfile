@@ -1,4 +1,4 @@
-FROM iwootten/flask-crypto
+FROM onsdigital/flask-crypto
 
 ADD server.py /app/server.py
 ADD settings.py /app/settings.py
