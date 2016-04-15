@@ -22,4 +22,4 @@ PRIVATE_KEY_PASSWORD = os.getenv("PRIVATE_KEY_PASSWORD", "digitaleq")
 
 LOGGING_FORMAT = "%(asctime)s|%(levelname)s: %(message)s"
 LOGGING_LOCATION = "error.log"
-LOGGING_LEVEL = logging.debug
+LOGGING_LEVEL = logging.DEBUG
