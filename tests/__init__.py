@@ -1,5 +1,5 @@
 from cryptography.hazmat.backends import default_backend
-from cryptography.hazmat.primitives.asymmetric import rsa, padding
+from cryptography.hazmat.primitives.asymmetric import rsa
 from cryptography.hazmat.primitives.serialization import Encoding, PrivateFormat, PublicFormat, BestAvailableEncryption
 import os
 
@@ -15,9 +15,9 @@ os.environ['PRIVATE_KEY_PASSWORD'] = "digitaleq"
 backend = default_backend()
 
 eq_private_key = rsa.generate_private_key(
-   public_exponent=f4,
-   key_size=3072,
-   backend=default_backend()
+    public_exponent=f4,
+    key_size=3072,
+    backend=default_backend()
 )
 
 eq_private_bytes = eq_private_key.private_bytes(
@@ -43,9 +43,9 @@ f.write(eq_private_bytes.decode('UTF8'))
 f.close()
 
 sde_private_key = rsa.generate_private_key(
-   public_exponent=f4,
-   key_size=3072,
-   backend=default_backend()
+    public_exponent=f4,
+    key_size=3072,
+    backend=default_backend()
 )
 
 sde_private_bytes = sde_private_key.private_bytes(
