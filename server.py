@@ -4,12 +4,14 @@ from cryptography import exceptions
 from decrypter import Decrypter
 import binascii
 import settings
+import logging
 
 app = Flask(__name__)
 
 
 @app.errorhandler(400)
 def known_error(error=None):
+    app.logger.error("POSIE:DECRYPT:FAILURE '%s'", request.data.decode('UTF8'))
     message = {
         'status': 400,
         'message': "{}: {}".format(error, request.url),
@@ -22,6 +24,7 @@ def known_error(error=None):
 
 @app.errorhandler(500)
 def unknown_error(error=None):
+    app.logger.error("POSIE:DECRYPT:FAILURE '%s'", request.data.decode('UTF8'))
     message = {
         'status': 500,
         'message': "Internal server error: " + repr(error),
@@ -34,7 +37,6 @@ def unknown_error(error=None):
 
 @app.route('/key')
 def key():
-
     return settings.PUBLIC_KEY
 
 
@@ -46,7 +48,7 @@ def decrypt():
         return known_error("Request payload was empty")
 
     try:
-        app.logger.debug("------ Received some data -------", request.data)
+        app.logger.debug("POSIE:DECRYPT: Received some data")
 
         data_bytes = request.data.decode('UTF8')
 
@@ -59,6 +61,7 @@ def decrypt():
             exceptions.InvalidSignature,
             exceptions.NotYetFinalized,
             exceptions.AlreadyUpdated):
+
         return known_error("Decryption Failure")
     except binascii.Error:
         return known_error("Request payload was not base64 encoded")
@@ -76,4 +79,6 @@ def decrypt():
 
 
 if __name__ == '__main__':
+    logging.basicConfig(level=settings.LOGGING_LEVEL, format=settings.LOGGING_FORMAT)
+
     app.run(debug=True, host='0.0.0.0')
