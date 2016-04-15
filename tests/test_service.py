@@ -15,6 +15,7 @@ import jwt
 
 KID = 'SDE'
 
+
 class Encrypter (object):
     def __init__(self):
         private_key_bytes = self._to_bytes(settings.EQ_PRIVATE_KEY)
@@ -78,6 +79,7 @@ class Encrypter (object):
         jwe = jwe_protected_header + b"." + encrypted_key + b"." + self._encode_iv(self.iv) + b"." + encoded_ciphertext + b"." + encoded_tag
 
         return jwe
+
 
 class TestPosieService(unittest.TestCase):
 

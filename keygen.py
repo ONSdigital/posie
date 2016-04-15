@@ -1,5 +1,5 @@
 from cryptography.hazmat.backends import default_backend
-from cryptography.hazmat.primitives.asymmetric import rsa, padding
+from cryptography.hazmat.primitives.asymmetric import rsa
 from cryptography.hazmat.primitives.serialization import Encoding, PrivateFormat, PublicFormat, BestAvailableEncryption
 
 f4 = 65537
@@ -7,9 +7,9 @@ f4 = 65537
 backend = default_backend()
 
 eq_private_key = rsa.generate_private_key(
-   public_exponent=f4,
-   key_size=3072,
-   backend=default_backend()
+    public_exponent=f4,
+    key_size=3072,
+    backend=default_backend()
 )
 
 eq_private_bytes = eq_private_key.private_bytes(
