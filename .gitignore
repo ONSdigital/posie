@@ -4,3 +4,5 @@ decoded/
 ready_to_import/
 tests/__pycache__/
 __pycache__
+jwt-test-keys/
+.DS_Store
