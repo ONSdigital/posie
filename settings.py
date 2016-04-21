@@ -13,7 +13,6 @@ EQ_JWT_LEEWAY_IN_SECONDS = 120
 
 # EQ's keys
 EQ_PUBLIC_KEY = get_key(os.getenv('EQ_PUBLIC_KEY', "/keys/sr-public.pem"))
-EQ_PRIVATE_KEY = get_key(os.getenv('EQ_PRIVATE_KEY', "/keys/sr-private.pem"))
 
 # Posies keys
 PUBLIC_KEY = get_key(os.getenv('PUBLIC_KEY', "/keys/sdx-public.pem"))
