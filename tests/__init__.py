@@ -7,7 +7,6 @@ f4 = 65537
 
 os.environ['EQ_PUBLIC_KEY'] = './jwt-test-keys/sr-public.pem'
 
-os.environ['PUBLIC_KEY'] = './jwt-test-keys/sdx-public.pem'
 os.environ['PRIVATE_KEY'] = './jwt-test-keys/sdx-private.pem'
 os.environ['PRIVATE_KEY_PASSWORD'] = "digitaleq"
 
@@ -52,15 +51,6 @@ sde_private_bytes = sde_private_key.private_bytes(
     format=PrivateFormat.TraditionalOpenSSL,
     encryption_algorithm=BestAvailableEncryption(b'digitaleq')
 )
-
-sde_public_key = sde_private_key.public_key().public_bytes(
-    encoding=Encoding.PEM,
-    format=PublicFormat.SubjectPublicKeyInfo
-)
-
-f = open('./jwt-test-keys/sdx-public.pem', 'w')
-f.write(sde_public_key.decode('UTF8'))
-f.close()
 
 f = open('./jwt-test-keys/sdx-private.pem', 'w')
 f.write(sde_private_bytes.decode('UTF8'))

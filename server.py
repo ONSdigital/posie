@@ -35,11 +35,6 @@ def unknown_error(error=None):
     return resp
 
 
-@app.route('/key')
-def key():
-    return settings.PUBLIC_KEY
-
-
 @app.route('/decrypt', methods=['POST'])
 def decrypt():
     request.get_data()
