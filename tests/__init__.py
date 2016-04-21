@@ -6,7 +6,6 @@ import os
 f4 = 65537
 
 os.environ['EQ_PUBLIC_KEY'] = './jwt-test-keys/sr-public.pem'
-os.environ['EQ_PRIVATE_KEY'] = './jwt-test-keys/sr-private.pem'
 
 os.environ['PUBLIC_KEY'] = './jwt-test-keys/sdx-public.pem'
 os.environ['PRIVATE_KEY'] = './jwt-test-keys/sdx-private.pem'
