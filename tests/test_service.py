@@ -15,10 +15,12 @@ import jwt
 
 KID = 'SDE'
 
+TEST_EQ_PRIVATE_KEY = settings.get_key("./jwt-test-keys/sr-private.pem")
+
 
 class Encrypter (object):
     def __init__(self):
-        private_key_bytes = self._to_bytes(settings.EQ_PRIVATE_KEY)
+        private_key_bytes = self._to_bytes(TEST_EQ_PRIVATE_KEY)
         public_key_bytes = self._to_bytes(settings.PUBLIC_KEY)
 
         self.private_key = serialization.load_pem_private_key(private_key_bytes,
