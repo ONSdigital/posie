@@ -1,4 +1,4 @@
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, g
 from cryptography import exceptions
 
 from decrypter import Decrypter
@@ -7,6 +7,19 @@ import settings
 import logging
 
 app = Flask(__name__)
+
+
+def get_decrypter():
+    decrypter = getattr(g, '_decrypter', None)
+
+    if decrypter is None:
+        try:
+            decrypter = g._decrypter = Decrypter()
+        except Exception as e:
+            app.logger.error("Decrypter failed to start")
+            app.logger.error(repr(e))
+
+    return decrypter
 
 
 @app.errorhandler(400)
@@ -46,6 +59,8 @@ def decrypt():
         app.logger.debug("POSIE:DECRYPT: Received some data")
 
         data_bytes = request.data.decode('UTF8')
+
+        decrypter = get_decrypter()
 
         decrypted_json = decrypter.decrypt(data_bytes)
     except (
