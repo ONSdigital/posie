@@ -23,10 +23,10 @@ eq_public_key = eq_private_key.public_key().public_bytes(
     format=PublicFormat.SubjectPublicKeyInfo
 )
 
-f = open('./jwt-test-keys/sr-public.pem', 'w')
+f = open('./jwt-test-keys/sdc-submission-signing-sr-public-key.pem', 'w')
 f.write(eq_public_key.decode('UTF8'))
 f.close()
 
-f = open('./jwt-test-keys/sr-private.pem', 'w')
+f = open('./jwt-test-keys/sdc-submission-signing-sr-private-key.pem', 'w')
 f.write(eq_private_bytes.decode('UTF8'))
 f.close()

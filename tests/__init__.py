@@ -5,10 +5,9 @@ import os
 
 f4 = 65537
 
-os.environ['EQ_PUBLIC_KEY'] = './jwt-test-keys/sr-public.pem'
+os.environ['EQ_PUBLIC_KEY'] = './jwt-test-keys/sdc-submission-signing-sr-public-key.pem'
 
-os.environ['PUBLIC_KEY'] = './jwt-test-keys/sdx-public.pem'
-os.environ['PRIVATE_KEY'] = './jwt-test-keys/sdx-private.pem'
+os.environ['PRIVATE_KEY'] = './jwt-test-keys/sdc-submission-encryption-sdx-private-key.pem'
 os.environ['PRIVATE_KEY_PASSWORD'] = "digitaleq"
 
 backend = default_backend()
@@ -33,11 +32,11 @@ eq_public_key = eq_private_key.public_key().public_bytes(
 if not os.path.exists('./jwt-test-keys'):
     os.mkdir('./jwt-test-keys')
 
-f = open('./jwt-test-keys/sr-public.pem', 'w')
+f = open('./jwt-test-keys/sdc-submission-signing-sr-public-key.pem', 'w')
 f.write(eq_public_key.decode('UTF8'))
 f.close()
 
-f = open('./jwt-test-keys/sr-private.pem', 'w')
+f = open('./jwt-test-keys/sdc-submission-signing-sr-private-key.pem', 'w')
 f.write(eq_private_bytes.decode('UTF8'))
 f.close()
 
@@ -53,15 +52,6 @@ sde_private_bytes = sde_private_key.private_bytes(
     encryption_algorithm=BestAvailableEncryption(b'digitaleq')
 )
 
-sde_public_key = sde_private_key.public_key().public_bytes(
-    encoding=Encoding.PEM,
-    format=PublicFormat.SubjectPublicKeyInfo
-)
-
-f = open('./jwt-test-keys/sdx-public.pem', 'w')
-f.write(sde_public_key.decode('UTF8'))
-f.close()
-
-f = open('./jwt-test-keys/sdx-private.pem', 'w')
+f = open('./jwt-test-keys/sdc-submission-encryption-sdx-private-key.pem', 'w')
 f.write(sde_private_bytes.decode('UTF8'))
 f.close()
