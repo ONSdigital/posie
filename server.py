@@ -43,11 +43,16 @@ def decrypt():
         return known_error("Request payload was empty")
 
     try:
+        decrypter = Decrypter()
+    except Exception as e:
+        app.logger.warning("Decrypter failed to start")
+        app.logger.warning(repr(e))
+
+    try:
         app.logger.debug("POSIE:DECRYPT: Received some data")
 
         data_bytes = request.data.decode('UTF8')
 
-        decrypter = Decrypter()
         decrypted_json = decrypter.decrypt(data_bytes)
     except (
             exceptions.UnsupportedAlgorithm,
