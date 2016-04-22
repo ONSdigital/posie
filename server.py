@@ -45,8 +45,8 @@ def decrypt():
     try:
         decrypter = Decrypter()
     except Exception as e:
-        app.logger.warning("Decrypter failed to start")
-        app.logger.warning(repr(e))
+        app.logger.error("Decrypter failed to start")
+        app.logger.error(repr(e))
 
     try:
         app.logger.debug("POSIE:DECRYPT: Received some data")
