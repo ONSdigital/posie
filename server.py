@@ -43,12 +43,6 @@ def decrypt():
         return known_error("Request payload was empty")
 
     try:
-        decrypter = Decrypter()
-    except Exception as e:
-        app.logger.error("Decrypter failed to start")
-        app.logger.error(repr(e))
-
-    try:
         app.logger.debug("POSIE:DECRYPT: Received some data")
 
         data_bytes = request.data.decode('UTF8')
@@ -80,5 +74,11 @@ def decrypt():
 
 if __name__ == '__main__':
     logging.basicConfig(level=settings.LOGGING_LEVEL, format=settings.LOGGING_FORMAT)
+
+    try:
+        decrypter = Decrypter()
+    except Exception as e:
+        app.logger.error("Decrypter failed to start")
+        app.logger.error(repr(e))
 
     app.run(debug=True, host='0.0.0.0')
