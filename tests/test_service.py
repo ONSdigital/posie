@@ -4,7 +4,6 @@ from cryptography.hazmat.primitives.asymmetric import padding
 from cryptography.hazmat.primitives.ciphers import Cipher, algorithms, modes
 from cryptography.hazmat.primitives.serialization import Encoding, PublicFormat
 
-
 from server import app
 from decrypter import Decrypter
 
@@ -17,7 +16,7 @@ import jwt
 
 KID = 'SDE'
 
-TEST_EQ_PRIVATE_KEY = settings.get_key("./jwt-test-keys/sr-private.pem")
+TEST_EQ_PRIVATE_KEY = settings.get_key("./jwt-test-keys/sdc-submission-signing-sr-private-key.pem")
 
 
 class Encrypter (object):
