@@ -90,12 +90,7 @@ def decrypt():
 
 
 if __name__ == '__main__':
+    # Startup
     logging.basicConfig(level=settings.LOGGING_LEVEL, format=settings.LOGGING_FORMAT)
-
-    try:
-        decrypter = Decrypter()
-    except Exception as e:
-        app.logger.error("Decrypter failed to start")
-        app.logger.error(repr(e))
 
     app.run(debug=True, host='0.0.0.0')
