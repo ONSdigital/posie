@@ -10,6 +10,8 @@ app = Flask(__name__)
 
 
 def get_decrypter():
+    # Sets up a single decrypter throughout app.
+
     decrypter = getattr(g, '_decrypter', None)
 
     if decrypter is None:
