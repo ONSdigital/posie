@@ -1,4 +1,4 @@
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, g
 from cryptography import exceptions
 
 from decrypter import Decrypter
@@ -7,6 +7,21 @@ import settings
 import logging
 
 app = Flask(__name__)
+
+
+def get_decrypter():
+    # Sets up a single decrypter throughout app.
+
+    decrypter = getattr(g, '_decrypter', None)
+
+    if decrypter is None:
+        try:
+            decrypter = g._decrypter = Decrypter()
+        except Exception as e:
+            app.logger.error("Decrypter failed to start")
+            app.logger.error(repr(e))
+
+    return decrypter
 
 
 @app.errorhandler(400)
@@ -47,7 +62,8 @@ def decrypt():
 
         data_bytes = request.data.decode('UTF8')
 
-        decrypter = Decrypter()
+        decrypter = get_decrypter()
+
         decrypted_json = decrypter.decrypt(data_bytes)
     except (
             exceptions.UnsupportedAlgorithm,
@@ -74,6 +90,7 @@ def decrypt():
 
 
 if __name__ == '__main__':
+    # Startup
     logging.basicConfig(level=settings.LOGGING_LEVEL, format=settings.LOGGING_FORMAT)
 
     app.run(debug=True, host='0.0.0.0')
