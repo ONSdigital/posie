@@ -95,7 +95,6 @@ class Encrypter (object):
 
 class TestPosieService(unittest.TestCase):
 
-    key_endpoint = "/key"
     decrypt_endpoint = "/decrypt"
 
     def setUp(self):
@@ -109,10 +108,6 @@ class TestPosieService(unittest.TestCase):
         # propagate the exceptions to the test client
         self.app.testing = True
 
-        r = self.app.get(self.key_endpoint)
-
-        self.public_key = r.data
-
     def encrypt_and_send_json(self, json_string):
 
         data = json.loads(json_string)
@@ -123,10 +118,6 @@ class TestPosieService(unittest.TestCase):
         r = self.app.post(self.decrypt_endpoint, data=encoded_data)
 
         return r
-
-    def test_key_generation(self):
-
-        self.assertIsNotNone(self.public_key)
 
     def test_decrypt_fail_sends_400(self):
 
