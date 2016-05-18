@@ -5,6 +5,7 @@ from decrypter import Decrypter
 import binascii
 import settings
 import logging
+import logging.handlers
 
 app = Flask(__name__)
 
@@ -92,5 +93,6 @@ def decrypt():
 if __name__ == '__main__':
     # Startup
     logging.basicConfig(level=settings.LOGGING_LEVEL, format=settings.LOGGING_FORMAT)
-
+    handler = logging.handlers.RotatingFileHandler(settings.LOGGING_LOCATION, maxBytes=20000, backupCount=5)
+    app.logger.addHandler(handler)
     app.run(debug=True, host='0.0.0.0')
