@@ -1,6 +1,6 @@
 from flask import Flask, request, jsonify, g
 from cryptography import exceptions
-
+from logging import Formatter
 from decrypter import Decrypter
 import binascii
 import settings
@@ -94,5 +94,6 @@ if __name__ == '__main__':
     # Startup
     logging.basicConfig(level=settings.LOGGING_LEVEL, format=settings.LOGGING_FORMAT)
     handler = logging.handlers.RotatingFileHandler(settings.LOGGING_LOCATION, maxBytes=20000, backupCount=5)
+    handler.setFormatter(Formatter(settings.LOGGING_FORMAT))
     app.logger.addHandler(handler)
     app.run(debug=True, host='0.0.0.0')
