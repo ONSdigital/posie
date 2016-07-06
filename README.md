@@ -20,6 +20,8 @@ To start sdx-decrypt, just run the server:
 
     $ python server.py
 
+## API
+
 sdx-decrypt exposes two endpoints '/key' and '/decrypt' which expose a public key and the decryption service respectively, by default binding to port 5000 on localhost.
 
 The key endpoint exposes a pem format public key and the decrypt endpoint decrypts and returns the POST data it is sent as JSON. 
