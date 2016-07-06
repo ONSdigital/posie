@@ -1,8 +1,9 @@
 .DS_Store
+tests/__pycache__/
+__pycache__
 data/
 decoded/
 ready_to_import/
-tests/__pycache__/
-__pycache__
 jwt-test-keys/
-.DS_Store
+logs/
+*.pyc

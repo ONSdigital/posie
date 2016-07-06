@@ -11,8 +11,4 @@ pyasn1==0.1.9
 pycparser==2.14
 six==1.10.0
 PyJWT==1.4.0
-flake8==2.5.4
 mccabe==0.4.0
-pep8==1.7.0
-pyflakes==1.0.0
-flake8-print==2.0.2

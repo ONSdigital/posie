@@ -1,8 +1,6 @@
-[![Build Status](https://travis-ci.org/ONSdigital/sdx-decrypt.svg?branch=master)](https://travis-ci.org/ONSdigital/sdx-decrypt)
-
-![Logo](http://www.80snostalgia.com/files/fluposie.jpg)
-
 # sdx-decrypt
+
+[![Build Status](https://travis-ci.org/ONSdigital/sdx-decrypt.svg?branch=master)](https://travis-ci.org/ONSdigital/sdx-decrypt)
 
 sdx-decrypt is a decryption service written in Python. It is a component of the Office of National Statistics (ONS) Survey Data Exchange (SDE) project, which takes an encrypted json payload and transforms it into a number of formats for use within the ONS.
 
