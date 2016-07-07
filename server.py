@@ -36,7 +36,7 @@ def errorhandler_400(e):
 
 
 def client_error(error=None):
-    logger.error("FAILURE", error=error)
+    logger.error(error)
     message = {
         'status': 400,
         'message': error,
