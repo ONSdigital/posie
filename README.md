@@ -1,10 +1,10 @@
-[![Build Status](https://travis-ci.org/ONSdigital/sdx-decrypt.svg?branch=master)](https://travis-ci.org/ONSdigital/sdx-decrypt)
-
-![Logo](http://www.80snostalgia.com/files/fluposie.jpg)
-
 # sdx-decrypt
 
-sdx-decrypt is a decryption service written in Python. It is a component of the Office of National Statistics (ONS) Survey Data Exchange (SDE) project, which takes an encrypted json payload and transforms it into a number of formats for use within the ONS.
+[![Build Status](https://travis-ci.org/ONSdigital/sdx-decrypt.svg?branch=master)](https://travis-ci.org/ONSdigital/sdx-decrypt)
+
+sdx-decrypt is a decryption service written in Python. It is a component of the Office of National Statistics (ONS) Survey Data Exchange (SDX) project, which takes an encrypted json payload and transforms it into a number of formats for use within the ONS.
+
+sdx-decrypt uses [JSON Web Tokens](https://jwt.io/) to decrypt data.
 
 ## Installation
 
@@ -22,11 +22,9 @@ To start sdx-decrypt, just run the server:
 
     $ python server.py
 
-sdx-decrypt exposes two endpoints '/key' and '/decrypt' which expose a public key and the decryption service respectively, by default binding to port 5000 on localhost.
+## API
 
-The key endpoint exposes a pem format public key and the decrypt endpoint decrypts and returns the POST data it is sent as JSON. 
-
-sdx-decrypt uses [JSON Web Tokens](https://jwt.io/) to decrypt data.
+ * `POST /decrypt` - decrypts and returns the data it is sent as JSON
 
 ### Example
 
