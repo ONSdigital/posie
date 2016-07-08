@@ -4,6 +4,8 @@
 
 sdx-decrypt is a decryption service written in Python. It is a component of the Office of National Statistics (ONS) Survey Data Exchange (SDX) project, which takes an encrypted json payload and transforms it into a number of formats for use within the ONS.
 
+sdx-decrypt uses [JSON Web Tokens](https://jwt.io/) to decrypt data.
+
 ## Installation
 
 Using virtualenv and pip, create a new environment and install within using:
@@ -23,8 +25,6 @@ To start sdx-decrypt, just run the server:
 ## API
 
  * `POST /decrypt` - decrypts and returns the data it is sent as JSON
-
-sdx-decrypt uses [JSON Web Tokens](https://jwt.io/) to decrypt data.
 
 ### Example
 

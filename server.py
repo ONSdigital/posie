@@ -24,8 +24,7 @@ def get_decrypter():
         try:
             decrypter = g._decrypter = Decrypter()
         except Exception as e:
-            logger.error("Decrypter failed to start")
-            logger.error(repr(e))
+            logger.error("Decrypter failed to start", exception=repr(e))
 
     return decrypter
 
@@ -36,11 +35,11 @@ def errorhandler_400(e):
 
 
 def client_error(error=None):
-    logger.error(error)
+    logger.error(error, request=request.data.decode('UTF8'))
     message = {
         'status': 400,
         'message': error,
-        'uri': request.url,
+        'uri': request.url
     }
     resp = jsonify(message)
     resp.status_code = 400
@@ -49,10 +48,11 @@ def client_error(error=None):
 
 
 @app.errorhandler(500)
-def server_error(error=None):
+def server_error(e):
+    logger.error("Server Error", exception=repr(e), request=request.data.decode('UTF8'))
     message = {
         'status': 500,
-        'message': "Internal server error: " + repr(error),
+        'message': "Internal server error: " + repr(e)
     }
     resp = jsonify(message)
     resp.status_code = 500
@@ -89,9 +89,9 @@ def decrypt():
         elif str(e) == "Incorrect number of tokens":
             return client_error(str(e))
         else:
-            return server_error()
-    except:
-        return server_error()
+            return server_error(e)
+    except Exception as e:
+        return server_error(e)
     else:
         return jsonify(**decrypted_json)
 
