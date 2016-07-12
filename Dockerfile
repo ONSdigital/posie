@@ -10,4 +10,4 @@ WORKDIR /app/
 
 EXPOSE 5000
 
-ENTRYPOINT startup.sh
+ENTRYPOINT ./startup.sh
