@@ -6,6 +6,7 @@ import binascii
 import settings
 import logging
 import sys
+import os
 
 
 app = Flask(__name__)
@@ -97,5 +98,5 @@ def decrypt():
 
 
 if __name__ == '__main__':
-    # startup
-    app.run(debug=True, host='0.0.0.0')
+    port = int(os.getenv("PORT"))
+    app.run(debug=True, host='0.0.0.0', port=port)
