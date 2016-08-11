@@ -19,4 +19,4 @@ PRIVATE_KEY_PASSWORD = os.getenv("PRIVATE_KEY_PASSWORD", "digitaleq")
 
 LOGGING_FORMAT = "%(asctime)s|%(levelname)s: sdx-decrypt: %(message)s"
 LOGGING_LOCATION = "logs/decrypt.log"
-LOGGING_LEVEL = logging.DEBUG
+LOGGING_LEVEL = logging.getLevelName(os.getenv('LOGGING_LEVEL', 'DEBUG'))
