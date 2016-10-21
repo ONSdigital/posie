@@ -25,6 +25,8 @@ To start sdx-decrypt, just run the server:
 ## API
 
  * `POST /decrypt` - decrypts and returns the data it is sent as JSON
+ * `GET /healthcheck` - returns a JSON response with a key/value pairs describing the service state
+
 
 ### Example
 
