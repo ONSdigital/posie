@@ -1,0 +1,6 @@
+---
+  applications:
+    - name: sdx-decrypt
+  env:
+    EQ_PUBLIC_KEY: /keys/THIS-IS-HONESTLY-A-KEY.pem
+    PRIVATE_KEY: /keys/super-private-sshhh-key.pem
