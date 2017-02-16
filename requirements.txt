@@ -1,5 +1,5 @@
-cffi==1.5.2
-cryptography==1.5.3
+cffi==1.9.1
+cryptography==1.7.1
 enum34==1.1.2
 Flask==0.10.1
 gunicorn==19.6.0
@@ -8,10 +8,11 @@ itsdangerous==0.24
 Jinja2==2.8
 MarkupSafe==0.23
 mccabe==0.4.0
+pika==0.10.0
 pyasn1==0.1.9
+PyJWT==1.4.2
 pycparser==2.14
-PyJWT==1.4.0
+requests==2.12.4
 six==1.10.0
 structlog==16.1.0
-Werkzeug==0.11.4
-gunicorn==19.6.0
+Werkzeug==0.11.9
