@@ -1,4 +1,6 @@
 ### Unreleased
+
+### 1.1.2 2017-02-16
   - Add change log
   - Update python module _cryptography_: `1.5.3` -> `1.7.1`
   - Update python module _cffi_: `1.5.2` -> `1.9.1`
