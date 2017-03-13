@@ -16,8 +16,7 @@ logging.basicConfig(stream=sys.stdout, level=settings.LOGGING_LEVEL, format=sett
 logger = wrap_logger(
     logging.getLogger(__name__)
 )
-logger.debug("START")
-logger.info("Current version: {}".format(__version__))
+logger.info("START", version=__version__)
 
 
 def get_decrypter():
