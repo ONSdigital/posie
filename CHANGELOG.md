@@ -1,4 +1,6 @@
 ### Unreleased
+
+### 1.1.3 2017-03-15
   - Add version number to log
 
 ### 1.1.2 2017-02-16
