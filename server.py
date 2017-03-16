@@ -8,6 +8,7 @@ import logging
 import sys
 import os
 
+__version__ = "1.1.3"
 
 app = Flask(__name__)
 
@@ -15,7 +16,7 @@ logging.basicConfig(stream=sys.stdout, level=settings.LOGGING_LEVEL, format=sett
 logger = wrap_logger(
     logging.getLogger(__name__)
 )
-logger.debug("START")
+logger.info("START", version=__version__)
 
 
 def get_decrypter():
