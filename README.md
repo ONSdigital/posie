@@ -46,7 +46,7 @@ decrypted_data = r.text
 
 ## Configuration
 
-Compulsory environment variables available for configuration are listed below:
+Some of important environment variables available for configuration are listed below:
 
 | Environment Variable            | Description
 |---------------------------------|-------------------------------
