@@ -39,3 +39,24 @@ r = requests.post('http://127.0.0.1:5000/decrypt', data=encrypted_data)
 
 decrypted_data = r.text
 ```
+
+## Configuration
+
+Some of important environment variables available for configuration are listed below:
+
+| Environment Variable            | Description
+|---------------------------------|-------------------------------
+| EQ_PUBLIC_KEY                   | Location of EQ public key
+| PRIVATE_KEY                     | Location of private key
+| PRIVATE_KEY_PASSWORD            | Private key password
+
+
+
+
+
+
+
+
+
+
+
