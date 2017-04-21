@@ -37,7 +37,7 @@ def errorhandler_400(e):
 
 
 def client_error(error=None):
-    logger.error(error, request=request.data.decode('UTF8'))
+    logger.error(error)
     message = {
         'status': 400,
         'message': error,
@@ -51,7 +51,7 @@ def client_error(error=None):
 
 @app.errorhandler(500)
 def server_error(e):
-    logger.error("Server Error", exception=repr(e), request=request.data.decode('UTF8'))
+    logger.error("Server Error", exception=repr(e))
     message = {
         'status': 500,
         'message': "Internal server error: " + repr(e)
