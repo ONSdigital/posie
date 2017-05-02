@@ -11,11 +11,11 @@ def get_key(key_name):
 EQ_JWT_LEEWAY_IN_SECONDS = 120
 
 # eq keys
-EQ_PUBLIC_KEY = get_key(os.getenv('EQ_PUBLIC_KEY', "/keys/sdc-submission-signing-sr-public-key.pem"))
+EQ_PUBLIC_KEY = get_key(os.getenv('EQ_PUBLIC_KEY'))
 
 # sdx keys
-PRIVATE_KEY = get_key(os.getenv('PRIVATE_KEY', "/keys/sdc-submission-encryption-sdx-private-key.pem"))
-PRIVATE_KEY_PASSWORD = os.getenv("PRIVATE_KEY_PASSWORD", "digitaleq")
+PRIVATE_KEY = get_key(os.getenv('PRIVATE_KEY'))
+PRIVATE_KEY_PASSWORD = os.getenv("PRIVATE_KEY_PASSWORD")
 
 LOGGING_FORMAT = "%(asctime)s|%(levelname)s: sdx-decrypt: %(message)s"
 LOGGING_LOCATION = "logs/decrypt.log"
