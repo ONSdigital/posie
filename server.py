@@ -28,6 +28,8 @@ def _get_value(key):
 def check_default_env_vars():
 
     env_vars = ["EQ_PUBLIC_KEY", "PRIVATE_KEY", "PRIVATE_KEY_PASSWORD"]
+    
+    missing_env_var = False
 
     for i in env_vars:
         try:
