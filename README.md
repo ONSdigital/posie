@@ -49,3 +49,9 @@ Compulsory environment variables available for configuration are listed below:
 | EQ_PUBLIC_KEY                   | Location of EQ public key
 | PRIVATE_KEY                     | Location of private key
 | PRIVATE_KEY_PASSWORD            | Private key password
+
+### License
+
+Copyright © 2016, Office for National Statistics (https://www.ons.gov.uk)
+
+Released under MIT license, see [LICENSE](LICENSE) for details.
