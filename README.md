@@ -58,4 +58,8 @@ Compulsory environment variables available for configuration are listed below:
 
 Copyright © 2016, Office for National Statistics (https://www.ons.gov.uk)
 
+<<<<<<< HEAD
 Released under MIT license, see [LICENSE](LICENSE) for details.
+=======
+Released under MIT license, see [LICENSE](LICENSE) for details.
+>>>>>>> Correct licence attribution
