@@ -109,6 +109,9 @@ def healthcheck():
 
 
 if __name__ == '__main__':
-    check_default_env_vars()
+    if not check_globals(settings):
+        logger.error("Variables missing from environment.")
+        sys.exit(1)
+
     port = int(os.getenv("PORT"))
     app.run(debug=True, host='0.0.0.0', port=port)
