@@ -19,27 +19,9 @@ logger = wrap_logger(
 logger.info("START", version=__version__)
 
 
-def _get_value(key):
-    value = os.getenv(key)
-    if not value:
-        raise ValueError("No value set for " + key)
-
-
-def check_default_env_vars():
-
-    env_vars = ["EQ_PUBLIC_KEY", "PRIVATE_KEY", "PRIVATE_KEY_PASSWORD"]
-
-    missing_env_var = False
-
-    for i in env_vars:
-        try:
-            _get_value(i)
-        except ValueError as e:
-            logger.error("Unable to start service", error=e)
-            missing_env_var = True
-
-    if missing_env_var is True:
-        sys.exit(1)
+def check_globals(module):
+    g = {k: v for k, v in vars(module).items() if not k.startswith("_") and k.isupper()}
+    return all(g.values())
 
 
 def get_decrypter():
