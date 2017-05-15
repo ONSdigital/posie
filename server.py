@@ -19,9 +19,9 @@ logger = wrap_logger(
 logger.info("START", version=__version__)
 
 
-def check_globals(module):
+def bad_globals(module):
     g = {k: v for k, v in vars(module).items() if not k.startswith("_") and k.isupper()}
-    return all(g.values())
+    return [k for k, v in g.items() if v is None]
 
 
 def get_decrypter():
@@ -109,8 +109,10 @@ def healthcheck():
 
 
 if __name__ == '__main__':
-    if not check_globals(settings):
-        logger.error("Variables missing from environment.")
+    bad = bad_globals(settings)
+    for bg in bad:
+        logger.error("{0} missing from environment.".format(bg))
+    if bad:
         sys.exit(1)
 
     port = int(os.getenv("PORT"))
