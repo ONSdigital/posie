@@ -2,6 +2,7 @@
   - Add environment variables to README
   - Remove secure data from logging messages
   - Correct license attribution
+  - Add codacy badge
 
 ### 1.1.3 2017-03-15
   - Add version number to log
