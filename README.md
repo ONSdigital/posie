@@ -1,6 +1,6 @@
 # sdx-decrypt
 
-[![Build Status](https://travis-ci.org/ONSdigital/sdx-decrypt.svg?branch=master)](https://travis-ci.org/ONSdigital/sdx-decrypt)
+[![Build Status](https://travis-ci.org/ONSdigital/sdx-decrypt.svg?branch=master)](https://travis-ci.org/ONSdigital/sdx-decrypt) [![Codacy Badge](https://api.codacy.com/project/badge/Grade/9724f552b7e0457d905ebbf54610d06a)](https://www.codacy.com/app/ons-sdc/sdx-decrypt?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=ONSdigital/sdx-decrypt&amp;utm_campaign=Badge_Grade)
 
 sdx-decrypt is a decryption service written in Python. It is a component of the Office of National Statistics (ONS) Survey Data Exchange (SDX) project, which takes an encrypted json payload and transforms it into a number of formats for use within the ONS.
 
