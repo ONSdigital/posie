@@ -13,7 +13,7 @@ __version__ = "1.1.3"
 
 app = Flask(__name__)
 
-logger_initial_config(service_name='sdx-collect')
+logger_initial_config(service_name='sdx-decrypt')
 
 logger = wrap_logger(
     logging.getLogger(__name__)
