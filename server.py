@@ -3,9 +3,7 @@ from cryptography import exceptions
 from decrypter import Decrypter
 from structlog import wrap_logger
 import binascii
-import settings
 import logging
-import sys
 import os
 
 from sdx.common.logger_config import logger_initial_config
