@@ -8,7 +8,11 @@ sdx-decrypt uses [JSON Web Tokens](https://jwt.io/) to decrypt data.
 
 ## Installation
 
-Using virtualenv and pip, create a new environment and install within using:
+Using virtualenv and pip, create a new environment and install the sdx-common library from a local directory:
+
+    $ pip install ./sdx-common
+
+Then from within the sdx-decrypt directory use:
 
     $ pip install -r requirements.txt
 
