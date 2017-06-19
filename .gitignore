@@ -13,3 +13,5 @@ include/
 lib/
 .Python
 pip-selfcheck.json
+coverage.xml
+.coverage

@@ -5,6 +5,7 @@
   - Add codacy badge
   - Adding sdx-common functionality
   - Updating logger format using sdx-common
+  - Add support for codecov to see unit test coverage
 
 ### 1.1.3 2017-03-15
   - Add version number to log
