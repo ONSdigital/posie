@@ -12,8 +12,5 @@ include/
 lib/
 .Python
 pip-selfcheck.json
-<<<<<<< HEAD
-=======
 coverage.xml
 .coverage
->>>>>>> Add support for codecov
