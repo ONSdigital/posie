@@ -24,6 +24,7 @@ class Decrypter(object):
             backend=backend
         )
 
+    @classmethod
     def _to_bytes(self, bytes_or_str):
         if isinstance(bytes_or_str, str):
             value = bytes_or_str.encode()
@@ -54,6 +55,7 @@ class Decrypter(object):
         key = self.private_key.decrypt(decoded_key, padding.OAEP(mgf=padding.MGF1(algorithm=hashes.SHA1()), algorithm=hashes.SHA1(), label=None))
         return key
 
+    @classmethod
     def _decrypt_cipher_text(self, cipher_text, iv, key, tag, jwe_protected_header):
         cipher = Cipher(algorithms.AES(key), modes.GCM(iv, tag), backend=backend)
         decryptor = cipher.decryptor()
