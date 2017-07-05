@@ -7,7 +7,6 @@ ready_to_import/
 jwt-test-keys/
 logs/
 *.pyc
-
 bin/
 include/
 lib/
