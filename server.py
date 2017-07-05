@@ -3,16 +3,18 @@ from cryptography import exceptions
 from decrypter import Decrypter
 from structlog import wrap_logger
 import binascii
-import settings
 import logging
-import sys
 import os
+
+from sdx.common.logger_config import logger_initial_config
+
 
 __version__ = "1.1.3"
 
 app = Flask(__name__)
 
-logging.basicConfig(stream=sys.stdout, level=settings.LOGGING_LEVEL, format=settings.LOGGING_FORMAT)
+logger_initial_config(service_name='sdx-decrypt')
+
 logger = wrap_logger(
     logging.getLogger(__name__)
 )
@@ -37,7 +39,7 @@ def errorhandler_400(e):
 
 
 def client_error(error=None):
-    logger.error(error, request=request.data.decode('UTF8'))
+    logger.error(error)
     message = {
         'status': 400,
         'message': error,
@@ -51,7 +53,7 @@ def client_error(error=None):
 
 @app.errorhandler(500)
 def server_error(e):
-    logger.error("Server Error", exception=repr(e), request=request.data.decode('UTF8'))
+    logger.error("Server Error", exception=repr(e))
     message = {
         'status': 500,
         'message': "Internal server error: " + repr(e)
