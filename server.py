@@ -97,6 +97,7 @@ def decrypt():
     except Exception as e:
         return server_error(e)
     else:
+        logger.debug("Decrypted received data")
         return jsonify(**decrypted_json)
 
 
