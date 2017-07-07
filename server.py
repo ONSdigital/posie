@@ -72,7 +72,7 @@ def decrypt():
         return client_error("Request payload was empty")
 
     try:
-        logger.debug("Received some data")
+        logger.info("Received some data")
         data_bytes = request.data.decode('UTF8')
         decrypter = get_decrypter()
         decrypted_json = decrypter.decrypt(data_bytes)
@@ -97,7 +97,7 @@ def decrypt():
     except Exception as e:
         return server_error(e)
     else:
-        logger.debug("Decrypted received data")
+        logger.info("Decrypted received data")
         return jsonify(**decrypted_json)
 
 
