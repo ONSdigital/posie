@@ -9,7 +9,7 @@ import os
 from sdx.common.logger_config import logger_initial_config
 
 
-__version__ = "1.1.3"
+__version__ = "1.2.0"
 
 app = Flask(__name__)
 
