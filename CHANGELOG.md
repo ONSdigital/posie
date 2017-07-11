@@ -1,4 +1,6 @@
 ### Unreleased
+
+### 1.2.0 2017-07-10
   - Add environment variables to README
   - Remove secure data from logging messages
   - Correct license attribution
