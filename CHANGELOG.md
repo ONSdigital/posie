@@ -7,6 +7,7 @@
   - Updating logger format using sdx-common
   - Add support for codecov to see unit test coverage
   - Update and pin version of sdx-common to 0.7.0
+  - Remove SDX_HOME variable from makefile and add release tag to git clone of sdx-common
 
 ### 1.1.3 2017-03-15
   - Add version number to log
