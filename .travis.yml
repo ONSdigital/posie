@@ -7,7 +7,6 @@ install:
     - pip install codecov
 script:
     - make test
-    - python -m unittest tests/test_service.py
     - coverage run -m unittest tests/*.py
 after_success:
     - codecov
