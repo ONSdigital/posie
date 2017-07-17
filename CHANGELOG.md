@@ -1,6 +1,6 @@
 ### Unreleased
   - Change all instances of ADD to COPY in Dockerfile
-  - Remove SDX_HOME variable from makefile and add release tag to git clone of sdx-common
+  - Remove use of SDX_HOME variable in makefile
 
 ### 1.2.0 2017-07-10
   - Add environment variables to README
