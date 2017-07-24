@@ -14,7 +14,6 @@ EQ_PUBLIC_KEY = get_key(os.getenv('EQ_PUBLIC_KEY', "./jwt-test-keys/sdc-submissi
 
 # sdx keys
 PRIVATE_KEY = get_key(os.getenv('PRIVATE_KEY', "./jwt-test-keys/sdc-submission-encryption-sdx-private-key.pem"))
-PRIVATE_KEY_PASSWORD = os.getenv("PRIVATE_KEY_PASSWORD", "digitaleq")
 
 LOGGING_LOCATION = "logs/decrypt.log"
 
