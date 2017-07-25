@@ -4,13 +4,20 @@ import os
 
 import yaml
 from cryptography import exceptions
-from flask import Flask, request, jsonify, g
+from flask import Flask, request, jsonify
 from sdc.crypto.secrets import SecretStore, validate_required_secrets
+from sdc.crypto.invalid_token_exception import InvalidTokenException
 from sdx.common.logger_config import logger_initial_config
 from structlog import wrap_logger
 
 import settings
-from decrypter import Decrypter
+import sdc.crypto.decrypter
+
+EXPECTED_SECRETS = [
+    "SDX_SECRET_KEY",
+]
+
+KEY_PURPOSE_SUBMISSION = 'eq-submission'
 
 
 __version__ = "1.3.0"
@@ -24,7 +31,7 @@ app.sdx = {}
 with open(app.config['SDX_SECRETS_FILE']) as file:
     secrets_from_file = yaml.safe_load(file)
 
-validate_required_secrets(secrets_from_file)
+validate_required_secrets(secrets_from_file, EXPECTED_SECRETS, KEY_PURPOSE_SUBMISSION)
 app.sdx['secret_store'] = SecretStore(secrets_from_file)
 
 logger_initial_config(service_name='sdx-decrypt')
@@ -33,18 +40,6 @@ logger = wrap_logger(
     logging.getLogger(__name__)
 )
 logger.info("START", version=__version__)
-
-
-def get_decrypter():
-    # Sets up a single decrypter throughout app.
-    decrypter = getattr(g, '_decrypter', None)
-    if decrypter is None:
-        try:
-            decrypter = g._decrypter = Decrypter()
-        except Exception as e:
-            logger.error("Decrypter failed to start", exception=repr(e))
-
-    return decrypter
 
 
 @app.errorhandler(400)
@@ -88,8 +83,7 @@ def decrypt():
     try:
         logger.info("Received some data")
         data_bytes = request.data.decode('UTF8')
-        decrypter = get_decrypter()
-        decrypted_json = decrypter.decrypt(data_bytes, app.sdx['secret_store'])
+        decrypted_json = sdc.crypto.decrypter.decrypt(data_bytes, app.sdx['secret_store'], KEY_PURPOSE_SUBMISSION)
     except (
             exceptions.UnsupportedAlgorithm,
             exceptions.InvalidKey,
@@ -101,6 +95,8 @@ def decrypt():
         return client_error("Decryption Failure")
     except binascii.Error:
         return client_error("Request payload was not base64 encoded")
+    except InvalidTokenException as e:
+        return client_error(str(e))
     except ValueError as e:
         if str(e) == "Ciphertext length must be equal to key size.":
             return client_error(str(e))

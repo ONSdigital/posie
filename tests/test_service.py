@@ -10,13 +10,12 @@ from cryptography.hazmat.primitives import serialization, hashes
 from cryptography.hazmat.primitives.asymmetric import padding
 from cryptography.hazmat.primitives.ciphers import Cipher, algorithms, modes
 from cryptography.hazmat.primitives.serialization import Encoding, PublicFormat
-from sdc.crypto.secrets import KEY_PURPOSE_SUBMISSION
 from sdc.crypto.secrets import SecretStore
 
 import tests  # NOQA - this is needed to generate the keys before the tests run
 import settings
 from server import app
-
+from server import KEY_PURPOSE_SUBMISSION
 
 TEST_EQ_PRIVATE_KEY = settings.get_key("./jwt-test-keys/sdc-submission-signing-sr-private-key.pem")
 
