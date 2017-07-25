@@ -5,12 +5,13 @@ import os
 import yaml
 from cryptography import exceptions
 from flask import Flask, request, jsonify, g
+from sdc.crypto.secrets import SecretStore, validate_required_secrets
 from sdx.common.logger_config import logger_initial_config
 from structlog import wrap_logger
 
 import settings
 from decrypter import Decrypter
-from sdc.cryptography.secrets import SecretStore, validate_required_secrets
+
 
 __version__ = "1.3.0"
 

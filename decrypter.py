@@ -1,4 +1,4 @@
-from sdc.cryptography.decrypter import decrypt
+from sdc.crypto.decrypter import decrypt
 
 
 class Decrypter(object):
