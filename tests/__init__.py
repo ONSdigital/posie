@@ -1,9 +1,10 @@
+import os
+
 from cryptography.hazmat.backends import default_backend
 from cryptography.hazmat.primitives.asymmetric import rsa
 from cryptography.hazmat.primitives.serialization import Encoding, PrivateFormat, PublicFormat, NoEncryption
-from scripts.create_secrets import generate_secrets_for_sdx
-import os
 
+from scripts.create_secrets import generate_secrets_for_sdx
 
 f4 = 65537
 

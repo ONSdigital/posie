@@ -2,16 +2,16 @@ import binascii
 import logging
 import os
 
-import yaml
 from cryptography import exceptions
 from flask import Flask, request, jsonify
-from sdc.crypto.secrets import SecretStore, validate_required_secrets
+from sdc.crypto.decrypter import decrypt as sdc_decrypt
 from sdc.crypto.invalid_token_exception import InvalidTokenException
+from sdc.crypto.secrets import SecretStore, validate_required_secrets
 from sdx.common.logger_config import logger_initial_config
 from structlog import wrap_logger
+import yaml
 
 import settings
-import sdc.crypto.decrypter
 
 EXPECTED_SECRETS = [
     "SDX_SECRET_KEY",
@@ -83,7 +83,7 @@ def decrypt():
     try:
         logger.info("Received some data")
         data_bytes = request.data.decode('UTF8')
-        decrypted_json = sdc.crypto.decrypter.decrypt(data_bytes, app.sdx['secret_store'], KEY_PURPOSE_SUBMISSION)
+        decrypted_json = sdc_decrypt(data_bytes, app.sdx['secret_store'], KEY_PURPOSE_SUBMISSION)
     except (
             exceptions.UnsupportedAlgorithm,
             exceptions.InvalidKey,
@@ -93,11 +93,14 @@ def decrypt():
             exceptions.AlreadyUpdated):
 
         return client_error("Decryption Failure")
-    except binascii.Error:
+    except binascii.Error as e:
+        logger.exception(e)
         return client_error("Request payload was not base64 encoded")
     except InvalidTokenException as e:
+        logger.exception(e)
         return client_error(str(e))
     except ValueError as e:
+        logger.exception(e)
         if str(e) == "Ciphertext length must be equal to key size.":
             return client_error(str(e))
         elif str(e) == "Incorrect number of tokens":

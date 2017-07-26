@@ -3,16 +3,16 @@ import json
 import os
 import unittest
 
-import jwt
-import yaml
 from cryptography.hazmat.backends.openssl.backend import backend
 from cryptography.hazmat.primitives import serialization, hashes
 from cryptography.hazmat.primitives.asymmetric import padding
 from cryptography.hazmat.primitives.ciphers import Cipher, algorithms, modes
 from cryptography.hazmat.primitives.serialization import Encoding, PublicFormat
 from sdc.crypto.secrets import SecretStore
+import jwt
+import yaml
 
-import tests  # NOQA - this is needed to generate the keys before the tests run
+import tests  # NOQA - this is needed to generate the keys before the tests run and it needs to be before importing server
 import settings
 from server import app
 from server import KEY_PURPOSE_SUBMISSION
@@ -20,7 +20,7 @@ from server import KEY_PURPOSE_SUBMISSION
 TEST_EQ_PRIVATE_KEY = settings.get_key("./jwt-test-keys/sdc-submission-signing-sr-private-key.pem")
 
 
-class Encrypter (object):
+class Encrypter:
     def __init__(self, private_kid, public_kid):
         self.private_kid = private_kid
         self.public_kid = public_kid
@@ -100,7 +100,7 @@ class Encrypter (object):
         return jwe
 
 
-class TestPosieService(unittest.TestCase):
+class TestDecryptService(unittest.TestCase):
 
     decrypt_endpoint = "/decrypt"
 
