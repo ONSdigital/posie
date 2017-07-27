@@ -2,7 +2,7 @@
 
 import argparse
 
-from sdc.crypto.scripts.generate_secrets import add_private_key_to_dict, add_public_key_to_dict, get_file_contents, \
+from sdc.crypto.utils.generate_secrets import add_private_key_to_dict, add_public_key_to_dict, get_file_contents, \
     generate_secrets_file
 
 KEY_PURPOSE_EQ_SUBMISSION = 'eq-submission'
