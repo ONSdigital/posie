@@ -97,7 +97,8 @@ def decrypt():
     except Exception as e:
         return server_error(e)
     else:
-        logger.info("Decrypted received data")
+        bound_logger = logger.bind(tx_id=decrypted_json.get("tx_id"))
+        bound_logger.info("Decrypted received data")
         return jsonify(**decrypted_json)
 
 
