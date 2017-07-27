@@ -1,5 +1,6 @@
 ### Unreleased
   - Remove enum34 from requirements.txt
+  - Bind logger to tx_id on decrypt
 
 ### 1.3.0 2017-07-25
   - Change all instances of ADD to COPY in Dockerfile
