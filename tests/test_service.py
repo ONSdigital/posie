@@ -145,13 +145,56 @@ class TestPosieService(unittest.TestCase):
         # Compare to bytestring version of decrypted data
         self.assertEqual(json.loads(r.data.decode('UTF8')), json.loads(message))
 
-    def test_decrypts_large_message(self):
+    def test_decrypts_large_message_no_tx_id(self):
         # Encrypt a message with the key
         message = '''{
             "type": "uk.gov.ons.edc.eq:surveyresponse",
             "version": "0.0.1",
             "origin": "uk.gov.ons.edc.eq",
             "survey_id": "21",
+            "collection": {
+              "exercise_sid": "hfjdskf",
+              "instrument_id": "0203",
+              "period": "2016-02-01"
+            },
+            "submitted_at": "2016-03-12T10:39:40Z",
+            "metadata": {
+              "user_id": "789473423",
+              "ru_ref": "12345678901A"
+            },
+            "data": {
+              "11": "01042016",
+              "12": "31102016",
+              "20": "1800000",
+              "51": "84",
+              "52": "10",
+              "53": "73",
+              "54": "24",
+              "50": "205",
+              "22": "705000",
+              "23": "900",
+              "24": "74",
+              "25": "50",
+              "26": "100",
+              "21": "60000",
+              "27": "7400",
+              "146": "some comment"
+            }
+        }'''
+
+        # Encrypt and ask posie to decode message
+        r = self.encrypt_and_send_json(message)
+
+        self.assertEqual(json.loads(r.data.decode('UTF8')), json.loads(message))
+
+    def test_decrypts_large_message_with_tx_id(self):
+        # Encrypt a message with the key
+        message = '''{
+            "type": "uk.gov.ons.edc.eq:surveyresponse",
+            "version": "0.0.1",
+            "origin": "uk.gov.ons.edc.eq",
+            "survey_id": "21",
+            "tx_id": "27923934-62de-475c-bc01-433c09fd38b8",
             "collection": {
               "exercise_sid": "hfjdskf",
               "instrument_id": "0203",
