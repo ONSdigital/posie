@@ -13,9 +13,7 @@ import yaml
 
 import settings
 
-EXPECTED_SECRETS = [
-    "SDX_SECRET_KEY",
-]
+EXPECTED_SECRETS = []
 
 KEY_PURPOSE_SUBMISSION = 'eq-submission'
 

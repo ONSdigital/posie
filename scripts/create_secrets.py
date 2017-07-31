@@ -2,8 +2,7 @@
 
 import argparse
 
-from sdc.crypto.utils.generate_secrets import add_private_key_to_dict, add_public_key_to_dict, get_file_contents, \
-    generate_secrets_file
+from sdc.crypto.utils.generate_secrets import add_private_key_to_dict, add_public_key_to_dict, generate_secrets_file
 
 KEY_PURPOSE_EQ_SUBMISSION = 'eq-submission'
 
@@ -16,8 +15,6 @@ def generate_secrets_for_sdx(keys_folder):
     add_public_key_to_dict(keys, KEY_PURPOSE_EQ_SUBMISSION, 'sdc-submission-signing-sr-public-key.pem', keys_folder)
 
     secrets = {}
-
-    secrets['SDX_SECRET_KEY'] = get_file_contents(keys_folder, 'sdx-secret-key.txt', True)
 
     generate_secrets_file(keys, secrets)
 
