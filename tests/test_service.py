@@ -12,7 +12,9 @@ from sdc.crypto.secrets import SecretStore
 import jwt
 import yaml
 
-import tests  # NOQA - this is needed to generate the keys before the tests run and it needs to be before importing server
+from tests import create_keys
+create_keys()  # NOQA - generate the keys before the tests run and it needs to be done before importing server
+
 import settings
 from server import app
 from server import KEY_PURPOSE_SUBMISSION

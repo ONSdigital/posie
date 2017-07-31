@@ -6,57 +6,58 @@ from cryptography.hazmat.primitives.serialization import Encoding, PrivateFormat
 
 from scripts.create_secrets import generate_secrets_for_sdx
 
-f4 = 65537
 
-os.environ['EQ_PUBLIC_KEY'] = './jwt-test-keys/sdc-submission-signing-sr-public-key.pem'
+def create_keys():
 
-os.environ['PRIVATE_KEY'] = './jwt-test-keys/sdc-submission-encryption-sdx-private-key.pem'
-os.environ['PRIVATE_KEY_PASSWORD'] = "digitaleq"
+    f4 = 65537
 
-backend = default_backend()
+    os.environ['EQ_PUBLIC_KEY'] = './jwt-test-keys/sdc-submission-signing-sr-public-key.pem'
 
-eq_private_key = rsa.generate_private_key(
-    public_exponent=f4,
-    key_size=3072,
-    backend=default_backend()
-)
+    os.environ['PRIVATE_KEY'] = './jwt-test-keys/sdc-submission-encryption-sdx-private-key.pem'
+    os.environ['PRIVATE_KEY_PASSWORD'] = "digitaleq"
 
-eq_private_bytes = eq_private_key.private_bytes(
-    encoding=Encoding.PEM,
-    format=PrivateFormat.TraditionalOpenSSL,
-    encryption_algorithm=NoEncryption()
-)
+    eq_private_key = rsa.generate_private_key(
+        public_exponent=f4,
+        key_size=3072,
+        backend=default_backend()
+    )
 
-eq_public_key = eq_private_key.public_key().public_bytes(
-    encoding=Encoding.PEM,
-    format=PublicFormat.SubjectPublicKeyInfo
-)
+    eq_private_bytes = eq_private_key.private_bytes(
+        encoding=Encoding.PEM,
+        format=PrivateFormat.TraditionalOpenSSL,
+        encryption_algorithm=NoEncryption()
+    )
 
-if not os.path.exists('./jwt-test-keys'):
-    os.mkdir('./jwt-test-keys')
+    eq_public_key = eq_private_key.public_key().public_bytes(
+        encoding=Encoding.PEM,
+        format=PublicFormat.SubjectPublicKeyInfo
+    )
 
-f = open('./jwt-test-keys/sdc-submission-signing-sr-public-key.pem', 'w')
-f.write(eq_public_key.decode('UTF8'))
-f.close()
+    if not os.path.exists('./jwt-test-keys'):
+        os.mkdir('./jwt-test-keys')
 
-f = open('./jwt-test-keys/sdc-submission-signing-sr-private-key.pem', 'w')
-f.write(eq_private_bytes.decode('UTF8'))
-f.close()
+    f = open('./jwt-test-keys/sdc-submission-signing-sr-public-key.pem', 'w')
+    f.write(eq_public_key.decode('UTF8'))
+    f.close()
 
-sde_private_key = rsa.generate_private_key(
-    public_exponent=f4,
-    key_size=3072,
-    backend=default_backend()
-)
+    f = open('./jwt-test-keys/sdc-submission-signing-sr-private-key.pem', 'w')
+    f.write(eq_private_bytes.decode('UTF8'))
+    f.close()
 
-sde_private_bytes = sde_private_key.private_bytes(
-    encoding=Encoding.PEM,
-    format=PrivateFormat.TraditionalOpenSSL,
-    encryption_algorithm=NoEncryption()
-)
+    sde_private_key = rsa.generate_private_key(
+        public_exponent=f4,
+        key_size=3072,
+        backend=default_backend()
+    )
 
-f = open('./jwt-test-keys/sdc-submission-encryption-sdx-private-key.pem', 'w')
-f.write(sde_private_bytes.decode('UTF8'))
-f.close()
+    sde_private_bytes = sde_private_key.private_bytes(
+        encoding=Encoding.PEM,
+        format=PrivateFormat.TraditionalOpenSSL,
+        encryption_algorithm=NoEncryption()
+    )
 
-generate_secrets_for_sdx("jwt-test-keys")
+    f = open('./jwt-test-keys/sdc-submission-encryption-sdx-private-key.pem', 'w')
+    f.write(sde_private_bytes.decode('UTF8'))
+    f.close()
+
+    generate_secrets_for_sdx("jwt-test-keys")
