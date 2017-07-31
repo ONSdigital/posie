@@ -19,7 +19,16 @@ import settings
 from server import app
 from server import KEY_PURPOSE_SUBMISSION
 
-TEST_EQ_PRIVATE_KEY = settings.get_key("./jwt-test-keys/sdc-submission-signing-sr-private-key.pem")
+
+def get_key(key_name):
+    key = open(key_name, 'r')
+    contents = key.read()
+    return contents
+
+
+# sdx keys
+PRIVATE_KEY = get_key("./jwt-test-keys/sdc-submission-encryption-sdx-private-key.pem")
+TEST_EQ_PRIVATE_KEY = get_key("./jwt-test-keys/sdc-submission-signing-sr-private-key.pem")
 
 
 class Encrypter:
@@ -33,7 +42,7 @@ class Encrypter:
                                                               password=None,
                                                               backend=backend)
         private_decryption_key = serialization.load_pem_private_key(
-            settings.PRIVATE_KEY.encode(),
+            PRIVATE_KEY.encode(),
             password=None,
             backend=backend
         )

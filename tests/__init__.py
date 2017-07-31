@@ -11,11 +11,6 @@ def create_keys():
 
     f4 = 65537
 
-    os.environ['EQ_PUBLIC_KEY'] = './jwt-test-keys/sdc-submission-signing-sr-public-key.pem'
-
-    os.environ['PRIVATE_KEY'] = './jwt-test-keys/sdc-submission-encryption-sdx-private-key.pem'
-    os.environ['PRIVATE_KEY_PASSWORD'] = "digitaleq"
-
     eq_private_key = rsa.generate_private_key(
         public_exponent=f4,
         key_size=3072,
