@@ -3,34 +3,16 @@ import logging
 import os
 
 from cryptography import exceptions
-from flask import Flask, request, jsonify
+from flask import current_app, request, jsonify
 from sdc.crypto.decrypter import decrypt as sdc_decrypt
 from sdc.crypto.invalid_token_exception import InvalidTokenException
-from sdc.crypto.secrets import SecretStore, validate_required_secrets
 from sdx.common.logger_config import logger_initial_config
 from structlog import wrap_logger
-import yaml
 
-import settings
-
-EXPECTED_SECRETS = []
-
-KEY_PURPOSE_SUBMISSION = 'eq-submission'
+from application import create_app, KEY_PURPOSE_SUBMISSION
 
 
 __version__ = "1.3.0"
-
-
-app = Flask(__name__)
-app.config.from_object(settings)
-
-app.sdx = {}
-
-with open(app.config['SDX_SECRETS_FILE']) as file:
-    secrets_from_file = yaml.safe_load(file)
-
-validate_required_secrets(secrets_from_file, EXPECTED_SECRETS, KEY_PURPOSE_SUBMISSION)
-app.sdx['secret_store'] = SecretStore(secrets_from_file)
 
 logger_initial_config(service_name='sdx-decrypt')
 
@@ -38,6 +20,8 @@ logger = wrap_logger(
     logging.getLogger(__name__)
 )
 logger.info("START", version=__version__)
+
+app = create_app()
 
 
 @app.errorhandler(400)
@@ -81,7 +65,7 @@ def decrypt():
     try:
         logger.info("Received some data")
         data_bytes = request.data.decode('UTF8')
-        decrypted_json = sdc_decrypt(data_bytes, app.sdx['secret_store'], KEY_PURPOSE_SUBMISSION)
+        decrypted_json = sdc_decrypt(data_bytes, current_app.sdx['secret_store'], KEY_PURPOSE_SUBMISSION)
     except (
             exceptions.UnsupportedAlgorithm,
             exceptions.InvalidKey,
