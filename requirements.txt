@@ -1,5 +1,4 @@
 cffi==1.9.1
-cryptography==1.7.1
 Flask==0.10.1
 gunicorn==19.6.0
 idna==2.0
@@ -16,4 +15,4 @@ sdx-common==0.7.0
 six==1.10.0
 structlog==16.1.0
 Werkzeug==0.11.9
-
+sdc-cryptography==0.1.6

@@ -1,17 +1,18 @@
-from flask import Flask, request, jsonify, g
-from cryptography import exceptions
-from decrypter import Decrypter
-from structlog import wrap_logger
 import binascii
 import logging
 import os
 
+from cryptography import exceptions
+from flask import current_app, request, jsonify
+from sdc.crypto.decrypter import decrypt as sdc_decrypt
+from sdc.crypto.invalid_token_exception import InvalidTokenException
 from sdx.common.logger_config import logger_initial_config
+from structlog import wrap_logger
+
+from application import create_app, KEY_PURPOSE_SUBMISSION
 
 
 __version__ = "1.3.0"
-
-app = Flask(__name__)
 
 logger_initial_config(service_name='sdx-decrypt')
 
@@ -20,17 +21,7 @@ logger = wrap_logger(
 )
 logger.info("START", version=__version__)
 
-
-def get_decrypter():
-    # Sets up a single decrypter throughout app.
-    decrypter = getattr(g, '_decrypter', None)
-    if decrypter is None:
-        try:
-            decrypter = g._decrypter = Decrypter()
-        except Exception as e:
-            logger.error("Decrypter failed to start", exception=repr(e))
-
-    return decrypter
+app = create_app()
 
 
 @app.errorhandler(400)
@@ -74,8 +65,7 @@ def decrypt():
     try:
         logger.info("Received some data")
         data_bytes = request.data.decode('UTF8')
-        decrypter = get_decrypter()
-        decrypted_json = decrypter.decrypt(data_bytes)
+        decrypted_json = sdc_decrypt(data_bytes, current_app.sdx['secret_store'], KEY_PURPOSE_SUBMISSION)
     except (
             exceptions.UnsupportedAlgorithm,
             exceptions.InvalidKey,
@@ -85,9 +75,14 @@ def decrypt():
             exceptions.AlreadyUpdated):
 
         return client_error("Decryption Failure")
-    except binascii.Error:
+    except binascii.Error as e:
+        logger.exception(e)
         return client_error("Request payload was not base64 encoded")
+    except InvalidTokenException as e:
+        logger.exception(e)
+        return client_error(str(e))
     except ValueError as e:
+        logger.exception(e)
         if str(e) == "Ciphertext length must be equal to key size.":
             return client_error(str(e))
         elif str(e) == "Incorrect number of tokens":
@@ -95,6 +90,7 @@ def decrypt():
         else:
             return server_error(e)
     except Exception as e:
+        logger.exception(e)
         return server_error(e)
     else:
         bound_logger = logger.bind(tx_id=decrypted_json.get("tx_id"))
