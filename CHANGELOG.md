@@ -3,6 +3,7 @@
   - Remove enum34 from requirements.txt
   - Bind logger to tx_id on decrypt
   - Change to use new sdc-cryptography library
+  - Upgrade to the latest sdc-crytography library
 
 ### 1.3.0 2017-07-25
   - Change all instances of ADD to COPY in Dockerfile
