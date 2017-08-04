@@ -1,34 +1,49 @@
+import base64
+import json
+import os
+import unittest
+
 from cryptography.hazmat.backends.openssl.backend import backend
 from cryptography.hazmat.primitives import serialization, hashes
 from cryptography.hazmat.primitives.asymmetric import padding
 from cryptography.hazmat.primitives.ciphers import Cipher, algorithms, modes
 from cryptography.hazmat.primitives.serialization import Encoding, PublicFormat
-
-from server import app
-from decrypter import Decrypter
-
-import base64
-import unittest
-import os
-import json
-import settings
+from sdc.crypto.secrets import SecretStore
 import jwt
+import yaml
 
-KID = 'SDE'
+from tests import create_keys
+create_keys()  # NOQA - generate the keys before the tests run and it needs to be done before importing server
 
-TEST_EQ_PRIVATE_KEY = settings.get_key("./jwt-test-keys/sdc-submission-signing-sr-private-key.pem")
+import settings
+from server import app
+from server import KEY_PURPOSE_SUBMISSION
 
 
-class Encrypter (object):
-    def __init__(self):
+def get_key(key_name):
+    key = open(key_name, 'r')
+    contents = key.read()
+    return contents
+
+
+# sdx keys
+PRIVATE_KEY = get_key("./jwt-test-keys/sdc-submission-encryption-sdx-private-key.pem")
+TEST_EQ_PRIVATE_KEY = get_key("./jwt-test-keys/sdc-submission-signing-sr-private-key.pem")
+
+
+class Encrypter:
+    def __init__(self, private_kid, public_kid):
+        self.private_kid = private_kid
+        self.public_kid = public_kid
+
         private_key_bytes = self._to_bytes(TEST_EQ_PRIVATE_KEY)
 
         self.private_key = serialization.load_pem_private_key(private_key_bytes,
-                                                              password=self._to_bytes(settings.PRIVATE_KEY_PASSWORD),
+                                                              password=None,
                                                               backend=backend)
         private_decryption_key = serialization.load_pem_private_key(
-            settings.PRIVATE_KEY.encode(),
-            password=self._to_bytes(settings.PRIVATE_KEY_PASSWORD),
+            PRIVATE_KEY.encode(),
+            password=None,
             backend=backend
         )
 
@@ -54,7 +69,8 @@ class Encrypter (object):
         return value
 
     def _jwe_protected_header(self):
-        return self._base_64_encode(b'{"alg":"RSA-OAEP","enc":"A256GCM"}')
+        header = '{"alg":"RSA-OAEP","enc":"A256GCM", "kid":"' + self.private_kid + '"}'
+        return self._base_64_encode(header.encode())
 
     def _encrypted_key(self, cek):
         ciphertext = self.public_key.encrypt(cek, padding.OAEP(mgf=padding.MGF1(algorithm=hashes.SHA1()), algorithm=hashes.SHA1(), label=None))
@@ -70,7 +86,7 @@ class Encrypter (object):
         return base64.urlsafe_b64encode(text).decode().strip("=").encode()
 
     def _encode_and_signed(self, payload):
-        return jwt.encode(payload, self.private_key, algorithm="RS256", headers={'kid': KID, 'typ': 'jwt'})
+        return jwt.encode(payload, self.private_key, algorithm="RS256", headers={'kid': self.public_kid, 'typ': 'jwt'})
 
     def encrypt(self, json):
         payload = self._encode_and_signed(json)
@@ -95,20 +111,26 @@ class Encrypter (object):
         return jwe
 
 
-class TestPosieService(unittest.TestCase):
+class TestDecryptService(unittest.TestCase):
 
     decrypt_endpoint = "/decrypt"
 
     def setUp(self):
-
-        self.encrypter = Encrypter()
-        self.decrypter = Decrypter()
-
         # creates a test client
         self.app = app.test_client()
 
         # propagate the exceptions to the test client
         self.app.testing = True
+        with open(settings.SDX_SECRETS_FILE) as file:
+            secrets_from_file = yaml.safe_load(file)
+
+        secret_store = SecretStore(secrets_from_file)
+
+        jwt_key = secret_store.get_key_for_purpose_and_type(KEY_PURPOSE_SUBMISSION, "private")
+
+        jwe_key = secret_store.get_key_for_purpose_and_type(KEY_PURPOSE_SUBMISSION, "public")
+
+        self.encrypter = Encrypter(jwt_key.kid, jwe_key.kid)
 
     def encrypt_and_send_json(self, json_string):
 
