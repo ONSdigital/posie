@@ -1,12 +1,12 @@
 from flask import Flask
-from sdc.crypto.secrets import SecretStore, validate_required_secrets
+from sdc.crypto.secrets import KeyStore, validate_required_secrets
 import yaml
 
 import settings
 
 EXPECTED_SECRETS = []
 
-KEY_PURPOSE_SUBMISSION = 'eq-submission'
+KEY_PURPOSE_SUBMISSION = 'submission'
 
 
 def create_app():
@@ -19,5 +19,5 @@ def create_app():
         secrets_from_file = yaml.safe_load(file)
 
     validate_required_secrets(secrets_from_file, EXPECTED_SECRETS, KEY_PURPOSE_SUBMISSION)
-    app.sdx['secret_store'] = SecretStore(secrets_from_file)
+    app.sdx['key_store'] = KeyStore(secrets_from_file)
     return app

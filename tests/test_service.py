@@ -8,7 +8,7 @@ from cryptography.hazmat.primitives import serialization, hashes
 from cryptography.hazmat.primitives.asymmetric import padding
 from cryptography.hazmat.primitives.ciphers import Cipher, algorithms, modes
 from cryptography.hazmat.primitives.serialization import Encoding, PublicFormat
-from sdc.crypto.secrets import SecretStore
+from sdc.crypto.secrets import KeyStore
 import jwt
 import yaml
 
@@ -27,8 +27,8 @@ def get_key(key_name):
 
 
 # sdx keys
-PRIVATE_KEY = get_key("./jwt-test-keys/sdc-submission-encryption-sdx-private-key.pem")
-TEST_EQ_PRIVATE_KEY = get_key("./jwt-test-keys/sdc-submission-signing-sr-private-key.pem")
+PRIVATE_KEY = get_key("./jwt-test-keys/sdc-sdx-submission-encryption-private-v1.pem")
+TEST_EQ_PRIVATE_KEY = get_key("./jwt-test-keys/sdc-eq-submission-signing-private-v1.pem")
 
 
 class Encrypter:
@@ -124,7 +124,7 @@ class TestDecryptService(unittest.TestCase):
         with open(settings.SDX_SECRETS_FILE) as file:
             secrets_from_file = yaml.safe_load(file)
 
-        secret_store = SecretStore(secrets_from_file)
+        secret_store = KeyStore(secrets_from_file)
 
         jwt_key = secret_store.get_key_for_purpose_and_type(KEY_PURPOSE_SUBMISSION, "private")
 

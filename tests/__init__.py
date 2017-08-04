@@ -4,7 +4,7 @@ from cryptography.hazmat.backends import default_backend
 from cryptography.hazmat.primitives.asymmetric import rsa
 from cryptography.hazmat.primitives.serialization import Encoding, PrivateFormat, PublicFormat, NoEncryption
 
-from scripts.create_secrets import generate_secrets_for_sdx
+from sdc.crypto.scripts.generate_secrets import generate_keys
 
 
 def create_keys():
@@ -55,4 +55,4 @@ def create_keys():
     f.write(sde_private_bytes.decode('UTF8'))
     f.close()
 
-    generate_secrets_for_sdx("jwt-test-keys")
+    generate_keys("jwt-test-keys")
