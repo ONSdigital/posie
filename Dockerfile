@@ -2,7 +2,6 @@ FROM onsdigital/flask-crypto
 
 COPY server.py /app/server.py
 COPY settings.py /app/settings.py
-COPY decrypter.py /app/decrypter.py
 COPY startup.sh /app/startup.sh
 
 # set working directory to /app/
