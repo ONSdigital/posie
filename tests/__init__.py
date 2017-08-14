@@ -4,7 +4,7 @@ from cryptography.hazmat.backends import default_backend
 from cryptography.hazmat.primitives.asymmetric import rsa
 from cryptography.hazmat.primitives.serialization import Encoding, PrivateFormat, PublicFormat, NoEncryption
 
-from sdc.crypto.scripts.generate_secrets import generate_keys
+from sdc.crypto.scripts.generate_keys import generate_keys
 
 
 def create_keys():

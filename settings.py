@@ -1,3 +1,3 @@
 import os
 
-SDX_SECRETS_FILE = os.getenv('SDX_SECRETS_FILE', 'secrets.yml')
+SDX_KEYS_FILE = os.getenv('SDX_KEYS_FILE', 'keys.yml')

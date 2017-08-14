@@ -8,7 +8,7 @@ from cryptography.hazmat.primitives import serialization, hashes
 from cryptography.hazmat.primitives.asymmetric import padding
 from cryptography.hazmat.primitives.ciphers import Cipher, algorithms, modes
 from cryptography.hazmat.primitives.serialization import Encoding, PublicFormat
-from sdc.crypto.secrets import KeyStore
+from sdc.crypto.key_store import KeyStore
 import jwt
 import yaml
 
@@ -121,7 +121,7 @@ class TestDecryptService(unittest.TestCase):
 
         # propagate the exceptions to the test client
         self.app.testing = True
-        with open(settings.SDX_SECRETS_FILE) as file:
+        with open(settings.SDX_KEYS_FILE) as file:
             secrets_from_file = yaml.safe_load(file)
 
         secret_store = KeyStore(secrets_from_file)

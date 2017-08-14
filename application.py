@@ -1,5 +1,5 @@
 from flask import Flask
-from sdc.crypto.secrets import KeyStore, validate_required_secrets
+from sdc.crypto.key_store import KeyStore, validate_required_keys
 import yaml
 
 import settings
@@ -15,9 +15,11 @@ def create_app():
 
     app.sdx = {}
 
-    with open(app.config['SDX_SECRETS_FILE']) as file:
-        secrets_from_file = yaml.safe_load(file)
+    with open(app.config['SDX_KEYS_FILE']) as file:
+        keys = yaml.safe_load(file)
 
-    validate_required_secrets(secrets_from_file, EXPECTED_SECRETS, KEY_PURPOSE_SUBMISSION)
-    app.sdx['key_store'] = KeyStore(secrets_from_file)
+    print(keys)  # NOQA
+
+    validate_required_keys(keys, KEY_PURPOSE_SUBMISSION)
+    app.sdx['key_store'] = KeyStore(keys)
     return app
