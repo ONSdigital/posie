@@ -5,7 +5,7 @@ import os
 from cryptography import exceptions
 from flask import current_app, request, jsonify
 from sdc.crypto.decrypter import decrypt as sdc_decrypt
-from sdc.crypto.invalid_token_exception import InvalidTokenException
+from sdc.crypto.exceptions import InvalidTokenException
 from sdx.common.logger_config import logger_initial_config
 from structlog import wrap_logger
 
@@ -65,7 +65,7 @@ def decrypt():
     try:
         logger.info("Received some data")
         data_bytes = request.data.decode('UTF8')
-        decrypted_json = sdc_decrypt(data_bytes, current_app.sdx['secret_store'], KEY_PURPOSE_SUBMISSION)
+        decrypted_json = sdc_decrypt(data_bytes, current_app.sdx['key_store'], KEY_PURPOSE_SUBMISSION)
     except (
             exceptions.UnsupportedAlgorithm,
             exceptions.InvalidKey,
