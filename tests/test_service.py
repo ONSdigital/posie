@@ -12,9 +12,6 @@ from sdc.crypto.key_store import KeyStore
 import jwt
 import yaml
 
-from tests import create_keys
-create_keys()  # NOQA - generate the keys before the tests run and it needs to be done before importing server
-
 import settings
 from server import app
 from server import KEY_PURPOSE_SUBMISSION
@@ -28,7 +25,7 @@ def get_key(key_name):
 
 # sdx keys
 PRIVATE_KEY = get_key("./jwt-test-keys/sdc-sdx-submission-encryption-private-v1.pem")
-TEST_EQ_PRIVATE_KEY = get_key("./jwt-test-keys/sdc-eq-submission-signing-private-v1.pem")
+TEST_EQ_PRIVATE_KEY = get_key("./jwt-test-keys/eq/sdc-eq-submission-signing-private-v1.pem")
 
 
 class Encrypter:

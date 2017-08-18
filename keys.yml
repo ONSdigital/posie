@@ -1,51 +1,4 @@
 keys:
-  20d28e37eefe5af95cbe7932623a0d4b2dbaa4d4:
-    platform: sdc
-    purpose: encryption
-    service: submission
-    type: private
-    use: sdx
-    value: |
-      -----BEGIN RSA PRIVATE KEY-----
-      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
-      -----END RSA PRIVATE KEY-----
-    version: key
   5026f2370a11e072fe307be31f4e21e0cad87b7f:
     platform: sdc
     purpose: submission
@@ -112,22 +65,3 @@ keys:
       pzEKVqP78oMk2FeoeJqKiH+xdPZplDzAOqxxbOysk00PAgMBAAE=
       -----END PUBLIC KEY-----
     version: v1
-  f9a81fec488acaada9b531f534772409f3e128c2:
-    platform: sdc
-    purpose: signing
-    service: submission
-    type: public
-    use: sr
-    value: |
-      -----BEGIN PUBLIC KEY-----
-      MIIBojANBgkqhkiG9w0BAQEFAAOCAY8AMIIBigKCAYEA8wjeSNWHPycAn0xf33qL
-      1i//NpaTT0ef3LSuEf8dYV1+tUOnHEjgbSziYHK8bHk3wEpnuxvDtJXn6YLzk4pq
-      2tQ2d7RkY6Xp16OptAR1kXSFnWsJATglvsMure/89zdG+2zDW/TnxQmaBUK+XecP
-      R2yo7Iv+Di+7/WtTNO0gjTMgm76Hxql7d6Zcy+C6mGMpOQ+WnODBHsWm0MLpqwv5
-      a99yvNrHa0n1SZRzWaY2eQJQlLmrKPPrs0zycM2lrIUNyktTEPuZ6bVFxWf1ljCb
-      c6P+i5d2f7UVPyg79GLy72paQEfSjP+w+wnGNRhPSepQ8eUzdt3kvmobXphZ6lU1
-      LC8PWGAD578dofCACG46LXpJJewviuwEZqGdyDPUW1PenCq0n1MdZHoUcLph+OtG
-      7Pw09DM5DSIezHiLdMNk7l9pfbRPKQ+ZoySedSZ70NccisLnexKTFbOC2OndGNqa
-      tUTkxAnRsrvYyCPVRumTJZIuOnPF88kE5zSyLRHote/BAgMBAAE=
-      -----END PUBLIC KEY-----
-    version: key

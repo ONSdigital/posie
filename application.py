@@ -18,8 +18,6 @@ def create_app():
     with open(app.config['SDX_KEYS_FILE']) as file:
         keys = yaml.safe_load(file)
 
-    print(keys)  # NOQA
-
     validate_required_keys(keys, KEY_PURPOSE_SUBMISSION)
     app.sdx['key_store'] = KeyStore(keys)
     return app
