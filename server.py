@@ -12,7 +12,7 @@ from structlog import wrap_logger
 from application import create_app, KEY_PURPOSE_SUBMISSION
 
 
-__version__ = "1.3.0"
+__version__ = "1.4.0"
 
 logger_initial_config(service_name='sdx-decrypt')
 
