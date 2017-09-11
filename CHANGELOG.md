@@ -1,4 +1,6 @@
 ### Unreleased
+
+### 1.4.0 2017-09-11
   - Ensure integrity and version of library dependencies
   - Remove enum34 from requirements.txt
   - Bind logger to tx_id on decrypt
