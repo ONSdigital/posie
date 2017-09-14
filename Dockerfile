@@ -5,6 +5,9 @@ COPY settings.py /app/settings.py
 COPY startup.sh /app/startup.sh
 COPY Makefile /app/Makefile
 
+# set working directory to /app/
+WORKDIR /app/
+
 EXPOSE 5000
 
 RUN apt-get update -y
