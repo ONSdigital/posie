@@ -4,7 +4,6 @@ COPY application.py /app/application.py
 COPY server.py /app/server.py
 COPY settings.py /app/settings.py
 COPY startup.sh /app/startup.sh
-COPY Makefile /app/Makefile
 COPY requirements.txt /app/requirements.txt
 
 # set working directory to /app/
