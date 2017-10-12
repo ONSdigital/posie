@@ -65,7 +65,8 @@ def decrypt():
     try:
         logger.info("Received some data")
         data_bytes = request.data.decode('UTF8')
-        decrypted_json = sdc_decrypt(data_bytes, current_app.sdx['key_store'], KEY_PURPOSE_SUBMISSION)
+        decrypted_json = sdc_decrypt(
+            data_bytes, current_app.sdx['key_store'], KEY_PURPOSE_SUBMISSION)
     except (
             exceptions.UnsupportedAlgorithm,
             exceptions.InvalidKey,
