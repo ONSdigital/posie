@@ -70,7 +70,8 @@ class Encrypter:
         return self._base_64_encode(header.encode())
 
     def _encrypted_key(self, cek):
-        ciphertext = self.public_key.encrypt(cek, padding.OAEP(mgf=padding.MGF1(algorithm=hashes.SHA1()), algorithm=hashes.SHA1(), label=None))
+        ciphertext = self.public_key.encrypt(cek, padding.OAEP(
+            mgf=padding.MGF1(algorithm=hashes.SHA1()), algorithm=hashes.SHA1(), label=None))
         return self._base_64_encode(ciphertext)
 
     def _encode_iv(self, iv):
@@ -103,7 +104,8 @@ class Encrypter:
         encoded_tag = self._base_64_encode(tag)
 
         # assemble result
-        jwe = jwe_protected_header + b"." + encrypted_key + b"." + self._encode_iv(self.iv) + b"." + encoded_ciphertext + b"." + encoded_tag
+        jwe = jwe_protected_header + b"." + encrypted_key + b"." + \
+            self._encode_iv(self.iv) + b"." + encoded_ciphertext + b"." + encoded_tag
 
         return jwe
 

@@ -30,10 +30,10 @@ def errorhandler_400(e):
 
 
 def client_error(error=None):
-    logger.error(error)
+    logger.error(repr(error))
     message = {
         'status': 400,
-        'message': error,
+        'message': repr(error),
         'uri': request.url
     }
     resp = jsonify(message)
@@ -65,7 +65,8 @@ def decrypt():
     try:
         logger.info("Received some data")
         data_bytes = request.data.decode('UTF8')
-        decrypted_json = sdc_decrypt(data_bytes, current_app.sdx['key_store'], KEY_PURPOSE_SUBMISSION)
+        decrypted_json = sdc_decrypt(
+            data_bytes, current_app.sdx['key_store'], KEY_PURPOSE_SUBMISSION)
     except (
             exceptions.UnsupportedAlgorithm,
             exceptions.InvalidKey,
@@ -79,16 +80,11 @@ def decrypt():
         logger.exception(e)
         return client_error("Request payload was not base64 encoded")
     except InvalidTokenException as e:
-        logger.exception(e)
-        return client_error(str(e))
+        logger.exception(repr(e))
+        return client_error(e)
     except ValueError as e:
-        logger.exception(e)
-        if str(e) == "Ciphertext length must be equal to key size.":
-            return client_error(str(e))
-        elif str(e) == "Incorrect number of tokens":
-            return client_error(str(e))
-        else:
-            return server_error(e)
+        logger.exception(repr(e))
+        return server_error(e)
     except Exception as e:
         logger.exception(e)
         return server_error(e)
