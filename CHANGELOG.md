@@ -1,4 +1,5 @@
 ### Unreleased
+  - Update version of sdc-cryptography to 0.2.1
   - Remove sdx-common git clone in Dockerfile
   - Add config specific to service to config file
 
