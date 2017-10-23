@@ -14,3 +14,4 @@ pip-selfcheck.json
 coverage.xml
 .coverage
 .idea
+report.html
