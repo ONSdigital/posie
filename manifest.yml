@@ -1,3 +1,7 @@
 applications:
 - name: sdx-decrypt
   buildpack: python_buildpack
+
+  env:
+    CF_DEPLOYMENT: True
+    SDX_KEYS_FILE: jwt-test-keys/keys.yml
