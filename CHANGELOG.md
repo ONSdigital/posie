@@ -3,7 +3,7 @@
   - Remove sdx-common git clone in Dockerfile
   - Add config specific to service to config file
   - Change to use pytest to improve test output. Also improve code coverage stats
-
+  - Add Cloudfoundry deployment files
 
 ### 1.4.0 2017-09-11
   - Ensure integrity and version of library dependencies
