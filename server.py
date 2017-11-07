@@ -6,15 +6,18 @@ from cryptography import exceptions
 from flask import current_app, request, jsonify
 from sdc.crypto.decrypter import decrypt as sdc_decrypt
 from sdc.crypto.exceptions import InvalidTokenException
-from sdx.common.logger_config import logger_initial_config
 from structlog import wrap_logger
 
 from application import create_app, KEY_PURPOSE_SUBMISSION
 
+import settings
+
 
 __version__ = "1.4.0"
 
-logger_initial_config(service_name='sdx-decrypt')
+logging.basicConfig(format=settings.LOGGING_FORMAT,
+                    datefmt="%Y-%m-%dT%H:%M:%S",
+                    level=settings.LOGGING_LEVEL)
 
 logger = wrap_logger(
     logging.getLogger(__name__)
