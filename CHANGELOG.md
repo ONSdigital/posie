@@ -4,6 +4,7 @@
   - Add config specific to service to config file
   - Change to use pytest to improve test output. Also improve code coverage stats
   - Add Cloudfoundry deployment files
+  - Remove sdx-common logging
 
 ### 1.4.0 2017-09-11
   - Ensure integrity and version of library dependencies
