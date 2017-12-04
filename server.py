@@ -97,6 +97,7 @@ def decrypt():
         return jsonify(**decrypted_json)
 
 
+@app.route('/info', methods=['GET'])
 @app.route('/healthcheck', methods=['GET'])
 def healthcheck():
     return jsonify({'status': 'OK'})
