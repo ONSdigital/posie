@@ -1,6 +1,8 @@
 applications:
 - name: sdx-decrypt
   buildpack: python_buildpack
+  health-check-http-endpoint: /info
+  health-check-type: http
 
   env:
     CF_DEPLOYMENT: True
