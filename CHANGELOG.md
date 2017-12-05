@@ -1,4 +1,5 @@
 ### Unreleased
+  - Add /info healthcheck endpoint
 
 ### 1.5.0 2017-11-21
   - Update version of sdc-cryptography to 0.2.1
