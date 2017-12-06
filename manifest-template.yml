@@ -1,0 +1,13 @@
+applications:
+- name: sdx-decrypt-SPACE
+  buildpack: python_buildpack
+  health-check-http-endpoint: /info
+  health-check-type: http
+  instances: INSTANCES
+  host: sdx-decrypt-SPACE
+  timeout: 180
+  memory: 512M
+
+  env:
+    CF_DEPLOYMENT: True
+    SDX_KEYS_FILE: jwt-test-keys/keys.yml
