@@ -1,6 +1,8 @@
 ### Unreleased
-  - Remove unused packages, updated packages that had security vulnerabilties.
 
+### 1.7.0 2018-08-15
+  - Remove unused packages, updated packages that had security vulnerabilties.
+  
 ### 1.6.0 2018-01-04
   - Add /info healthcheck endpoint
 
