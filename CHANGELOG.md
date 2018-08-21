@@ -1,4 +1,5 @@
 ### Unreleased
+  - Update dependencies
 
 ### 1.7.0 2018-08-15
   - Remove unused packages, updated packages that had security vulnerabilties.
