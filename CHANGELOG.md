@@ -1,4 +1,6 @@
 ### Unreleased
+
+### 1.8.0 2018-09-11
   - Update dependencies
 
 ### 1.7.0 2018-08-15
