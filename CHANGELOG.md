@@ -1,4 +1,5 @@
 ### Unreleased
+  - Update version of sdc-cryptography to 0.3.0
 
 ### 1.8.0 2018-09-11
   - Update dependencies
