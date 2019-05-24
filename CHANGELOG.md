@@ -1,4 +1,7 @@
 ### Unreleased
+  - Remove python 3.4 and 3.5 from travis builds
+  - Add python 3.7 to travis builds
+  - Update urllib3, Jinja2 and pyyaml to fix security issues
 
 ### 1.8.1 2019-01-22
   - Update version of sdc-cryptography to 0.3.0
