@@ -1,4 +1,5 @@
 ### Unreleased
+  - Update sdc-cryptography to 0.4.0
 
 ### 1.9.0 2019-05-31
   - Remove python 3.4 and 3.5 from travis builds
