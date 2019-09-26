@@ -1,4 +1,6 @@
 ### Unreleased
+
+### 1.9.2 2019-09-26
   - Update werkzeug to 0.15.6 to fix security issue
   - Update all packages to latest version, where possible.
 
