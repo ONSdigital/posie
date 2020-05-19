@@ -13,7 +13,7 @@ from application import create_app, KEY_PURPOSE_SUBMISSION
 import settings
 
 
-__version__ = "1.9.3"
+__version__ = "1.9.4"
 
 logging.basicConfig(format=settings.LOGGING_FORMAT,
                     datefmt="%Y-%m-%dT%H:%M:%S",
