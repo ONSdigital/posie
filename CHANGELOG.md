@@ -2,6 +2,7 @@
 
 ### 1.9.4 2020-05-13
   - Remove cloudfoundry deployment files
+  - Updated packages
 
 ### 1.9.3 2019-11-08
   - Add python 3.8 to travis builds
