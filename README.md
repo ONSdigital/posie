@@ -7,20 +7,36 @@ sdx-decrypt is a decryption service written in Python. It is a component of the 
 sdx-decrypt uses [JSON Web Tokens](https://jwt.io/) to decrypt data.
 
 ## Installation
+This application presently installs required packages from requirements files:
+- `requirements.txt`: packages for the application, with hashes for all packages: see https://pypi.org/project/hashin/
+- `test-requirements.txt`: packages for testing and linting
 
-Using virtualenv and pip, create a new environment and install the requirements:
+It's also best to use `pyenv` and `pyenv-virtualenv`, to build in a virtual environment with the currently recommended version of Python.  To install these, see:
+- https://github.com/pyenv/pyenv
+- https://github.com/pyenv/pyenv-virtualenv
+- (Note that the homebrew version of `pyenv` is easiest to install, but can lag behind the latest release of Python.)
 
-    $ pip install -r requirements.txt
+### Getting started
+Once your virtual environment is set, install the requirements:
+```shell
+$ make build
+```
+
+To test, first run `make build` as above, then run:
+```shell
+$ make test
+```
 
 It's also possible to install within a container using docker. From the sdx-decrypt directory:
-
-    $ docker build -t sdx-decrypt .
-
+```shell
+$ docker build -t sdx-decrypt .
+```
 ## Usage
 
 To start sdx-decrypt, just run the server:
-
-    $ python server.py
+```shell
+$ python server.py
+```
 
 ## API
 
