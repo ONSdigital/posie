@@ -1,4 +1,5 @@
 ### Unreleased
+  - Add openapi.yml
 
 ### 1.9.5 2020-05-21
   - Updated packages

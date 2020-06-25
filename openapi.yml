@@ -1,0 +1,136 @@
+openapi: 3.0.2
+
+info:
+  title: sdx-decrypt
+  description: A service that takes an encrypted json payload and returns it as json.
+  version: "1.9.5"
+
+servers:
+  - url: http://localhost:8081/
+
+paths:
+  /healthcheck:
+    get:
+      summary: Healthcheck.
+      description: Simple endpoint that reports the health of the application.
+      responses:
+        200:
+          description: Healthcheck retrieved successfully.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: "ok"
+        500:
+          $ref: '#/components/responses/ServerError'
+  /info:
+    $ref: '#/paths/~1healthcheck'
+
+  /decrypt:
+    post:
+      summary: Decrypt the data
+      description: Decrypt the data and return as json
+      requestBody:
+        description: Encrypted survey response
+        content:
+          application/octet-stream:
+            schema:
+              type: string
+              format: binary
+      responses:
+        200:
+          $ref: '#/components/responses/DecryptedResponse'
+        400:
+          $ref: '#/components/responses/ClientError'
+        500:
+          $ref: '#/components/responses/ServerError'
+
+components:
+  responses:
+    ClientError:
+      description: Client error
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              status:
+                type: integer
+                example: 400
+              message:
+                type: string
+                example: "Request payload was not base64 encoded"
+              uri:
+                type: string
+                example: "http://localhost:5000/decrypt"
+
+    ServerError:
+      description: Server error.
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              status:
+                type: integer
+                example: 500
+              message:
+                type: string
+                example: "Internal server error ..."
+
+    DecryptedResponse:
+      description: The decrypted survey response
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              type:
+                type: string
+                example: "uk.gov.ons.edc.eq:surveyresponse"
+              origin:
+                type: string
+                example: "uk.gov.ons.edc.eq"
+              survey_id:
+                type: string
+                example: "023"
+              version:
+                type: string
+                example: "0.0.1"
+              tx_id:
+                type: string
+                example: "b7f78b30-1814-45ac-963d-8c997c091f90"
+              collection:
+                type: object
+                properties:
+                  exercise_sid:
+                    type: string
+                    example: "hfjdskf"
+                  instrument_id:
+                    type: string
+                    example: "0203"
+                  period:
+                    type: string
+                    example: "0216"
+              submitted_at:
+                type: string
+                example: "2016-03-12T10:39:40Z"
+              metadata:
+                type: object
+                properties:
+                  user_id:
+                    type: string
+                    example: "789473423"
+                  ru_ref:
+                    type: string
+                    example: "12345678901A"
+              data:
+                type: object
+                example: '"11": "01/04/2016",
+                          "12": "31/10/2016",
+                          "20": "1800000",
+                          "51": "84",
+                          "146": "some comment"'
